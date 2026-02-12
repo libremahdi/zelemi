@@ -1,6 +1,6 @@
 # Compiler and flags
 CC = clang
-CFLAGS = -g -Isrc/lib/ -Isrc/string
+CFLAGS = -O3 -Isrc/lib/ -Isrc/string
 
 # Source files
 SRCS = $(wildcard src/*.c) $(wildcard src/string/*.c)

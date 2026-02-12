@@ -36,7 +36,7 @@ int main(void) {
         if(strcmp(input, "CPY")==0) {load_cpy(); continue;}
         
         if(sscanf(input, "%X", &HEX_INT)) {
-            code = (char *) realloc (code, sizeof(char)*(CodeSize+1));
+            code = (unsigned char *) realloc (code, sizeof(char)*(CodeSize+1));
             if(!code){perror("realloc"); return 1;}
             code[CodeSize]=HEX_INT;
             ++CodeSize;

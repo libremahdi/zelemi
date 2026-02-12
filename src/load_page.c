@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 void load_hlp() {
     printf("; Help Page\n");
@@ -31,4 +32,8 @@ void load_cpy() {
     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, \n\
     OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE \n\
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n");
+}
+
+void load_clr() {
+    system("clear");
 }

@@ -7,6 +7,7 @@ void load_hlp() {
     printf("; HLP : Show Help page and return to interpreter.\n");
     printf("; CPY : Show Copyright Page and return to interpreter\n");
     printf("; RUN : Save Machine opcodes and run.\n");
+    printf("; CLR : Clear Page\n");
 }
 
 void load_cpy() {

@@ -5,7 +5,7 @@
 #include "load_com.h"
 #include "mi_startup.h"
 #include "colors.h"
-// #include "pstring.h"
+#include "trim.h"
 
 #define PROMPT ">>"
 
@@ -32,11 +32,13 @@ int main(int argc, char **argv) {
 
         if(fgets(input, sizeof(input), inp_ptr) == NULL) {printf(YELLOW"InputError:"RESET" An error occurred in the input buffer.\n");}
         
-        if(strcmp(input, "\n")==0) continue; /* ignore blank line */
         input[strcspn(input, "\n")]=0; /* Remove NUL */
-        
-        
-        if(input[0] == ';') continue;
+        if(strstr(input, ";")) *strstr(input, ";")='\0';
+        trim_start(input);
+        trim_end(input);
+
+        if(input[0]=='\0') continue; /* ignore blank line */
+
         if(strcmp(input, "RUN")==0) break;
         if(strcmp(input, "END")==0) goto Exit;
         if(strcmp(input, "HLP")==0) {load_hlp(); continue;}

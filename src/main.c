@@ -9,8 +9,8 @@
 #define PINK    "\033[35m"
 #define RESET   "\033[0m"
 
-void load_cpy(){}
-void load_hlp(){}
+void load_cpy();
+void load_hlp();
 
 int main(void) {
     unsigned char *code = NULL;
@@ -27,9 +27,10 @@ int main(void) {
         printf(PINK">> "RESET);
         if(fgets(input, sizeof(input), stdin) == NULL) {printf("InputError: An error occurred in the input buffer.\n");}
         if(strcmp(input, "\n")==0) continue;
-        if(input[0] == ';') continue;
-
         input[strcspn(input, "\n")]=0;
+        
+        
+        if(input[0] == ';') continue;
         if(strcmp(input, "RUN")==0) break;
         if(strcmp(input, "END")==0) goto Exit;
         if(strcmp(input, "HLP")==0) {load_hlp(); continue;}
@@ -45,11 +46,7 @@ int main(void) {
         }
     };
 
-    for(int i=0 ; i<CodeSize ; ++i){
-        printf("0x%X ", code[i]);
-        if((i+1)%8==0) printf("\n");
-    }
-    printf("\n\n");
+    if(!CodeSize) {perror("EmptyBuffer"); return 1;}
 
     void *mem = mmap(NULL, sizeof(code), PROT_READ | PROT_WRITE | PROT_EXEC,
                      MAP_ANON | MAP_PRIVATE, -1, 0);
@@ -63,5 +60,6 @@ int main(void) {
     munmap(mem, sizeof(code));
 
 Exit:
+    free(code);
     return 0;
 }

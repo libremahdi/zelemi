@@ -5,7 +5,7 @@
 #include "load_com.h"
 #include "mi_startup.h"
 #include "colors.h"
-#include "trim.h"
+#include "mi_string.h"
 
 #define PROMPT ">>"
 
@@ -49,14 +49,7 @@ int main(int argc, char **argv) {
         if(strcmp(input, "CPY")==0) {load_cpy(); continue;}
         if(strcmp(input, "CLR")==0) {load_clr(); continue;}
 
-        if(sscanf(input, "%X", &HEX_INT) == 1) {
-            code = (unsigned char *) realloc (code, sizeof(char)*(CodeSize+1));
-            if(!code){perror("realloc"); return 1;}
-            code[CodeSize]= (unsigned char) HEX_INT;
-            ++CodeSize;
-        } else {
-            printf(YELLOW"InputError:"RESET" You are only allowed to enter hexadecimal numbers or 'RUN' and 'END'.\n");
-        }
+        if(str2hex_split(input, &code, &CodeSize)) continue;
     };
 
     if(!CodeSize) {perror(YELLOW"EmptyBuffer"RED); return 1;}

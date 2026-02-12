@@ -1,2 +1,3 @@
 90  ; nop
 C3  ; ret
+RUN

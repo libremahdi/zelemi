@@ -13,7 +13,8 @@ To Compile, simply use GCC or Clang to compile and execute the following command
 clang -O3 -Ilib/ -Istring *.c string/*.c -o [OUTPUT-FILE]
 ```
 
-However, to install it on the system, simply run the command `make install` in the source code directory.
+However, to install it on the system, simply run the command `sudo make` in the source code directory.
+To remove it, simply run: sudo make clean.
 
 ## License
 

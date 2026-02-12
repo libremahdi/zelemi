@@ -20,6 +20,10 @@ int main(int argc, char **argv) {
         show_startup();
         inp_ptr=stdin;
     } else { /* file */
+        if((!strchr(argv[1], '.'))||(strcmp(strchr(argv[1], '.'), ".mi")!=0)) {
+            printf(YELLOW"FileNameError:"RESET" Invalid file extension. The expected extension is '.mi'.\n");
+            return 1;
+        }
         inp_ptr=fopen(argv[1], "r");
         if(!inp_ptr) {
             printf(YELLOW"FileError:"RESET"Unable to open '%s'.", argv[1]);
@@ -30,7 +34,7 @@ int main(int argc, char **argv) {
     while(1) {
         if(argc==1) printf(PINK"%s "RESET, PROMPT);
 
-        if(fgets(input, sizeof(input), inp_ptr) == NULL) {printf(YELLOW"InputError:"RESET" An error occurred in the input buffer.\n");}
+        if(fgets(input, sizeof(input), inp_ptr) == NULL) {printf(YELLOW"InputError:"RESET" An error occurred in the input buffer.\n"); return 1;}
         
         input[strcspn(input, "\n")]=0; /* Remove NUL */
         if(strstr(input, ";")) *strstr(input, ";")='\0';

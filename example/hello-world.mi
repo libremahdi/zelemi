@@ -1,3 +1,5 @@
+; Print "Hello World!" for X86_64-intel
+
 ; This example prints the text "Hello World" to the terminal output using the write syscall (1).
 ;   rdi <- 1        : sets the first argument of the syscall, indicating that it should write to stdout.
 ;   rsi <- rip + 13 : specifies the location of the text to the syscall.

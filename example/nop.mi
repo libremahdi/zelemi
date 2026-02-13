@@ -1,3 +1,5 @@
+; NOP Command for X86_64-intel
+
 ; The NOP instruction (No Operation) in assembly language performs no action, 
 ; serving primarily as a placeholder or for timing purposes without altering processor state.
 

@@ -1,8 +1,14 @@
-48 31 ff                      
-48 8d 35 0d 00 00 00
-b8 01 00 00 00         
-ba 0e 00 00 00        
-0f 05                        
-c3
-48 65 6c 6c 6f 20 57 6f 72 6c 64 21 0a 0
+; This example prints the text "Hello World" to the terminal output using the write syscall (1).
+;   rdi <- 1        : sets the first argument of the syscall, indicating that it should write to stdout.
+;   rsi <- rip + 13 : specifies the location of the text to the syscall.
+;   eax <- 1        : sets the syscall number to 1 (for write).
+;   edx <- 14       : sends the length of the string (14) to the syscall for printing.
+
+48 c7 c7 01 00 00 00    ; mov rdi, 1  ; first agument of syscall, 1 for stdout
+48 8d 35 0d 00 00 00    ; lea rsi, [rip+13]
+b8 01 00 00 00          ; mov eax, 1  ; syscall number - 1 for write
+ba 0e 00 00 00          ; mov edx, 14 ; length of string - 14
+0f 05                   ; syscall
+c3                      ; ret
+48 65 6c 6c 6f 20 57 6f 72 6c 64 21 0a 0 ; Hello World!
 RUN

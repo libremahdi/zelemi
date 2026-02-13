@@ -2,3 +2,4 @@
 
 b8 01 00 00 00   ; mov eax, 1
 cd 80            ; int 0x80
+RUN

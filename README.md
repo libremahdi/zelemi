@@ -1,4 +1,4 @@
-# Tiny Machine Interpreter
+# Zero Level Machine Interpreter (Tiny)
 
 This interpreter operates at a zero level; there are no abstractions, and everything you write is exactly what the processor sees and executes. This project serves as an educational example and is not recommended for professional use or serious development. However, theoretically, there are no limitations to what this interpreter can accomplish.
 

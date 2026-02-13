@@ -100,14 +100,11 @@ int main(int argc, char **argv) {
             }
 
         };
-
         if(str2hex_split(input, &code, &CodeSize)) {
             if(argc==1) continue;
             return 1;
         }
     };
-
-
 
 Exit:
     if(inp_ptr!=stdin) fclose(inp_ptr);

@@ -34,7 +34,11 @@ int main(int argc, char **argv) {
     while(1) {
         if(argc==1) printf(PINK"%s "RESET, PROMPT);
 
-        if(fgets(input, sizeof(input), inp_ptr) == NULL) {printf(YELLOW"InputError:"RESET" An error occurred in the input buffer.\n"); return 1;}
+        if(fgets(input, sizeof(input), inp_ptr) == NULL) {
+            printf(YELLOW"InputError:"RESET" An error occurred in the input buffer.\n"); 
+            if (argc==1) continue;
+            return 1;
+        }
         
         input[strcspn(input, "\n")]=0; /* Remove NUL */
         if(strstr(input, ";")) *strstr(input, ";")='\0';
@@ -49,7 +53,10 @@ int main(int argc, char **argv) {
         if(strcmp(input, "CPY")==0) {load_cpy(); continue;}
         if(strcmp(input, "CLR")==0) {load_clr(); continue;}
 
-        if(str2hex_split(input, &code, &CodeSize)) continue;
+        if(str2hex_split(input, &code, &CodeSize)) {
+            if(argc==1) continue;
+            return 1;
+        }
     };
 
     if(!CodeSize) {perror(YELLOW"EmptyBuffer"RED); return 1;}

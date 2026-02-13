@@ -26,6 +26,12 @@ To execute a file, simply write:
 zelemi file.mi
 ```
 
+After installation, go to the example folder and run the file hello-world.mi as follows:
+
+```
+$ zelemi hello-world.mi
+Hello World!
+```
 If you don't provide any input and just type `zelemi`, it will run in console mode.
 
 ## License

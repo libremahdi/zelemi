@@ -2,6 +2,8 @@
 #include <string.h>
 #include <sys/mman.h>
 #include <stdlib.h>
+#include <unistd.h> /* fork */
+#include <sys/wait.h>
 #include "load_com.h"
 #include "mi_startup.h"
 #include "colors.h"
@@ -15,6 +17,10 @@ int main(int argc, char **argv) {
     char input[256]; /* input buffer*/
     unsigned int HEX_INT=0; /* input buffer to Hex buffer */
     FILE *inp_ptr;
+    void *mem=NULL;
+    void (*fn)(void)=NULL;
+    pid_t fork_pid=-1;
+    int status;
 
     if(argc==1) { /* console */
         show_startup();
@@ -47,11 +53,53 @@ int main(int argc, char **argv) {
 
         if(input[0]=='\0') continue; /* ignore blank line */
 
-        if(strcmp(input, "RUN")==0) break;
         if(strcmp(input, "END")==0) goto Exit;
-        if(strcmp(input, "HLP")==0) {load_hlp(); continue;}
-        if(strcmp(input, "CPY")==0) {load_cpy(); continue;}
-        if(strcmp(input, "CLR")==0) {load_clr(); continue;}
+        else if(strcmp(input, "HLP")==0) {load_hlp(); continue;}
+        else if(strcmp(input, "CPY")==0) {load_cpy(); continue;}
+        else if(strcmp(input, "CLRSCR")==0) {load_clr(); continue;}
+        else if(strcmp(input, "CLRBFR")==0) {free(code); code=NULL; CodeSize=0; continue;}
+        else if(strcmp(input, "RUN")==0) {
+            if(argc==1) {
+                if(!CodeSize) {perror(YELLOW"EmptyBuffer"RED); continue;}
+                fork_pid = fork();
+                if(fork_pid<0) {perror("fork"); goto Exit;}
+            } else {
+                fork_pid=-1;
+            }
+            if(fork_pid==0) {
+
+                mem = mmap(NULL, CodeSize, PROT_READ | PROT_WRITE | PROT_EXEC,
+                                MAP_ANON | MAP_PRIVATE, -1, 0);
+                if (mem == MAP_FAILED) { perror("mmap"); return 1; }
+
+                memcpy(mem, code, CodeSize);
+
+                void (*fn)(void) = mem;
+                fn();
+
+                munmap(mem, CodeSize);
+                return 0;
+            } else {
+                waitpid(-1, &status, 0);
+                free(code);
+                code=NULL;
+                CodeSize=0;
+                if (WIFEXITED(status)) {
+                    int exit_status = WEXITSTATUS(status);
+                    printf(GREEN"   exited normally with status: %d\n"RESET, exit_status);
+                } else if (WIFSIGNALED(status)) {
+                    int sig = WTERMSIG(status);
+                    printf(RED"   killed by signal: %d\n"RESET, sig);
+                } else if (WIFSTOPPED(status)) {
+                    int sig = WSTOPSIG(status);
+                    printf(YELLOW"   stopped by signal: %d\n"RESET, sig);
+                } else {
+                    printf(YELLOW"   terminated abnormally\n"RESET);
+                }
+                continue;
+            }
+
+        };
 
         if(str2hex_split(input, &code, &CodeSize)) {
             if(argc==1) continue;
@@ -59,18 +107,7 @@ int main(int argc, char **argv) {
         }
     };
 
-    if(!CodeSize) {perror(YELLOW"EmptyBuffer"RED); return 1;}
 
-    void *mem = mmap(NULL, CodeSize, PROT_READ | PROT_WRITE | PROT_EXEC,
-                     MAP_ANON | MAP_PRIVATE, -1, 0);
-    if (mem == MAP_FAILED) { perror("mmap"); return 1; }
-
-    memcpy(mem, code, CodeSize);
-
-    void (*fn)(void) = mem;
-    fn();
-
-    munmap(mem, CodeSize);
 
 Exit:
     if(inp_ptr!=stdin) fclose(inp_ptr);

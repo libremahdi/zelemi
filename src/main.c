@@ -64,7 +64,7 @@ int main(int argc, char **argv) {
                 fork_pid = fork();
                 if(fork_pid<0) {perror("fork"); goto Exit;}
             } else {
-                fork_pid=-1;
+                fork_pid=0;
             }
             if(fork_pid==0) {
 
@@ -78,7 +78,7 @@ int main(int argc, char **argv) {
                 fn();
 
                 munmap(mem, CodeSize);
-                return 0;
+                goto Exit;
             } else {
                 waitpid(-1, &status, 0);
                 free(code);

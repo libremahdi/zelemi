@@ -1,0 +1,12 @@
+; Get input from user for X86_64-Intel
+
+b8 00 00 00 00  ; mov rax, 0
+bf 00 00 00 00  ; mov rdi, 0
+be 00 00 00 00  ; mov rsi, 0
+ba 40 00 00 00  ; mov rdx, 64
+0f 05           ; syscall
+b8 3c 00 00 00  ; mov rax, 60
+31 ff           ; xor rdi, rdi
+0f 05           ; syscall
+
+RUN             ; zelemi Command

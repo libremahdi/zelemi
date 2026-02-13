@@ -67,7 +67,6 @@ int main(int argc, char **argv) {
                 fork_pid=0;
             }
             if(fork_pid==0) {
-
                 mem = mmap(NULL, CodeSize, PROT_READ | PROT_WRITE | PROT_EXEC,
                                 MAP_ANON | MAP_PRIVATE, -1, 0);
                 if (mem == MAP_FAILED) { perror("mmap"); return 1; }

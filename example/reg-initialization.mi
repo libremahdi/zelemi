@@ -1,3 +1,5 @@
+; Register Initialization in x86_64
+
 B8 01 00 00 00 ; mov rax, 1
 BB 02 00 00 00 ; mov rbx, 2
 B9 03 00 00 00 ; mov rcx, 3

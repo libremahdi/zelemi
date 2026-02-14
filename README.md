@@ -5,16 +5,28 @@ This interpreter operates at a zero level; there are no abstractions, and everyt
 Its installation and execution are very easy and straightforward due to its zero-dependency nature.
 
 ## Installation
-
-To Compile, simply use GCC or Clang to compile and execute the following command:
-
+For installation, First Download the project..
 
 ```bash
-clang -O3 -Ilib/ -Istring *.c string/*.c -o [OUTPUT-FILE]
+git clone https://github.com/libremahdi/zelemi.git
+cd zelemi
 ```
 
-However, to install it on the system, simply run the command `sudo make` in the source code directory.
-To remove it, simply run: sudo make clean.
+Then, Create a desired folder and navigate into it.
+
+```bash
+mkdir -p build
+cd build/
+```
+
+Now, execute the following commands in order.
+
+```bash
+cmake ..
+make
+sudo make install # for Install
+sudo make uninstall # for Uninstall
+```
 
 ## Use and Examples
 

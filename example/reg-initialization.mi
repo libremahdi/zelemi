@@ -16,5 +16,5 @@ BF 06 00 00 00 ; mov rdi, 6
 
 C3 ; ret
 
-SHWREG ; show registers at end
+GETREG ; get-reg function pointer
 RUN

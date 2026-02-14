@@ -14,6 +14,9 @@ void show_startup();
 void load_cpy();
 void load_hlp();
 void load_clr();
+
+void get_register(); // Global Function
+
 static void clear_buffer(unsigned char **code, unsigned int *CodeSize) {
     *CodeSize=1;
     free(*code);
@@ -32,7 +35,7 @@ int main(int argc, char **argv) {
     void *mem=NULL;
     void (*fn)(void)=NULL;
     pid_t fork_pid=-1;
-    int status, show_regs=0;
+    int status;
 
     if(argc==1) { /* console */
         show_startup();
@@ -69,7 +72,10 @@ int main(int argc, char **argv) {
         else if (strcmp(input, "HLP")==0) {load_hlp(); continue;}
         else if (strcmp(input, "CRT")==0) {load_cpy(); continue;}
         else if((strcmp(input, "CLR")==0)&&(argc==1)) {load_clr(); continue;}
-        else if (strcmp(input, "SHWREG")==0) {show_regs=1; continue;}
+        else if (strcmp(input, "GETREG")==0) {printf("Function Address: %p\n", (void*)get_register); continue;}
+        /* 48 B8 60 06 40 00 00 00 00 00 ; mov rax, [ADDR]
+         * FF D0 ; call rax
+        */
         else if((strcmp(input, "CLRBFR")==0)&&(argc==1)) {clear_buffer(&code, &CodeSize); continue;}
         else if (strcmp(input, "RUN")==0) {
             if(argc==1) {
@@ -89,44 +95,10 @@ int main(int argc, char **argv) {
                 void (*fn)(void) = mem;
                 fn();
 
-                unsigned long long RAX, RBX, RCX, RDX, RSI, RDI, RSP, RBP, R8, R9, R10, R11, R12, R13, R14, R15;
-                __asm__ ("mov %%rax, %0" : "=r" (RAX));
-                __asm__ ("mov %%rbx, %0" : "=r" (RBX));
-                __asm__ ("mov %%rcx, %0" : "=r" (RCX));
-                __asm__ ("mov %%rdx, %0" : "=r" (RDX));
-                __asm__ ("mov %%rsi, %0" : "=r" (RSI));
-                __asm__ ("mov %%rdi, %0" : "=r" (RDI));
-                __asm__ ("mov %%rsp, %0" : "=r" (RSP));
-                __asm__ ("mov %%rbp, %0" : "=r" (RBP));
-                __asm__ ("mov %%r8,  %0" : "=r" (R8));
-                __asm__ ("mov %%r9,  %0" : "=r" (R9));
-                __asm__ ("mov %%r10, %0" : "=r"(R10));
-                __asm__ ("mov %%r11, %0" : "=r"(R11));
-                __asm__ ("mov %%r12, %0" : "=r"(R12));
-                __asm__ ("mov %%r13, %0" : "=r"(R13));
-                __asm__ ("mov %%r14, %0" : "=r"(R14));
-                __asm__ ("mov %%r15, %0" : "=r"(R15));
-
-                if(show_regs) {
-     
-                    printf("RAX=%llx         RBX=%llx\n", RAX, RBX);
-                    printf("RCX=%llx         RDX=%llx\n", RCX, RDX);
-                    printf("RSI=%llx         RDI=%llx\n", RSI, RDI);
-                
-                    printf("R8=%llx          R9=%llx \n",R8 , R9 );
-                    printf("R10=%llx         R11=%llx\n",R10, R11);
-                    printf("R12=%llx         R13=%llx\n",R12, R13);
-                    printf("R14=%llx         R15=%llx\n",R14, R15);
-
-                    printf("RSP=%llx\nRBP=%llx\n",RSP, RBP);
-
-                }
-
                 munmap(mem, CodeSize);
                 goto Exit;
             } else {
                 waitpid(-1, &status, 0);
-                clear_buffer(&code, &CodeSize);
                 if (WIFEXITED(status)) {
                     int exit_status = WEXITSTATUS(status);
                     printf(GREEN"   exited normally with status: %d\n"RESET, exit_status);
@@ -139,6 +111,8 @@ int main(int argc, char **argv) {
                 } else {
                     printf(YELLOW"   terminated abnormally\n"RESET);
                 }
+                clear_buffer(&code, &CodeSize);
+
                 continue;
             }
 

@@ -3,13 +3,13 @@
 
 void load_hlp() {
     printf("Help Page\n\
-    END    : End Interpreter and Quit.\n\
-    HLP    : Show Help page and return to interpreter.\n\
-    CRT    : Show Copyright Page and return to interpreter\n\
-    RUN    : Save Machine opcodes and run.\n\
-    SHWREG : Show Registers when insert 'RUN'\n\
-    CLR    : Clear Page\n\
-    CLRBFR : Clear OPCode Buffer\n");
+   END    : End Interpreter and Quit.\n\
+   HLP    : Show Help page and return to interpreter.\n\
+   CRT    : Show Copyright Page and return to interpreter\n\
+   RUN    : Save Machine opcodes and run.\n\
+   GETREG : Show get_register function address\n\
+   CLR    : Clear Page\n\
+   CLRBFR : Clear OPCode Buffer\n");
 }
 
 void load_cpy() {

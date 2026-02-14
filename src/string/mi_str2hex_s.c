@@ -16,9 +16,9 @@ int str2hex_split(char *input, unsigned char **code, unsigned int *CodeSize) {
     while (token) {
         if(is_hexadecimal(token)) goto RET_ERR;
         if (sscanf(token, "%X", &HEX_INT) == 1) {
-            *code = (unsigned char *) realloc(*code, sizeof(unsigned char) * (*CodeSize + 1));
-            if (!*code) { perror("realloc"); exit(1); }
-            (*code)[*CodeSize] = (unsigned char) HEX_INT;
+            (*code)[*CodeSize-1] = (unsigned char) HEX_INT;
+            *code = (unsigned char *) realloc(*code, sizeof(unsigned char) * (*CodeSize+1));
+            if (!*code) { perror("realloc"); return 1; }
             (*CodeSize)++;
         } else {
             goto RET_ERR;
@@ -28,6 +28,7 @@ int str2hex_split(char *input, unsigned char **code, unsigned int *CodeSize) {
     return 0;
 
 RET_ERR:
-    printf(YELLOW"InputError:"RESET" You are only allowed to enter hexadecimal numbers or 'RUN' and 'END'.\n");
+    printf(YELLOW"InputError:"RESET" You are only allowed to enter hexadecimal numbers and mi-comment\n\
+            insert 'HLP' for more information.\n");
     return 1;
 }

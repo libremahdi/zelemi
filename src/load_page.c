@@ -2,12 +2,13 @@
 #include <stdlib.h>
 
 void load_hlp() {
-    printf("; Help Page\n");
-    printf("; END : End Interpreter and Quit.\n");
-    printf("; HLP : Show Help page and return to interpreter.\n");
-    printf("; CPY : Show Copyright Page and return to interpreter\n");
-    printf("; RUN : Save Machine opcodes and run.\n");
-    printf("; CLR : Clear Page\n");
+    printf("Help Page\n\
+    END    : End Interpreter and Quit.\n\
+    HLP    : Show Help page and return to interpreter.\n\
+    CRT    : Show Copyright Page and return to interpreter\n\
+    RUN    : Save Machine opcodes and run.\n\
+    CLR    : Clear Page\n\
+    CLRBFR : Clear OPCode Buffer\n");
 }
 
 void load_cpy() {

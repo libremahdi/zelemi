@@ -2,18 +2,30 @@
 #include <string.h>
 #include <sys/mman.h>
 #include <stdlib.h>
+#include <signal.h>
 #include <unistd.h> /* fork */
-#include <sys/wait.h>
-#include "load_com.h"
-#include "mi_startup.h"
+#include <sys/wait.h> /* waitpid */
 #include "colors.h"
 #include "mi_string.h"
 
 #define PROMPT ">>"
 
+void show_startup();
+void load_cpy();
+void load_hlp();
+void load_clr();
+static void clear_buffer(unsigned char **code, unsigned int *CodeSize) {
+    *CodeSize=1;
+    free(*code);
+    *code = malloc(1);
+    if (!*code) { perror("malloc"); exit(1); }
+}
+
 int main(int argc, char **argv) {
-    unsigned char *code = NULL; /* opcodes in Memory */
-    unsigned int CodeSize=0; /* opcodes size */
+    signal(SIGINT, SIG_IGN);
+    unsigned char *code = malloc(1); /* opcodes in Memory */
+    if (!code) { perror("malloc"); exit(1); }
+    unsigned int CodeSize=1; /* opcodes size */
     char input[256]; /* input buffer*/
     unsigned int HEX_INT=0; /* input buffer to Hex buffer */
     FILE *inp_ptr;
@@ -28,12 +40,12 @@ int main(int argc, char **argv) {
     } else { /* file */
         if((!strchr(argv[1], '.'))||(strcmp(strchr(argv[1], '.'), ".mi")!=0)) {
             printf(YELLOW"FileNameError:"RESET" Invalid file extension. The expected extension is '.mi'.\n");
-            return 1;
+            goto Exit_UNORM;
         }
         inp_ptr=fopen(argv[1], "r");
         if(!inp_ptr) {
             printf(YELLOW"FileError:"RESET"Unable to open '%s'.", argv[1]);
-            return 1;
+            goto Exit_UNORM;
         }
     }
 
@@ -43,7 +55,7 @@ int main(int argc, char **argv) {
         if(fgets(input, sizeof(input), inp_ptr) == NULL) {
             printf(YELLOW"InputError:"RESET" An error occurred in the input buffer.\n"); 
             if (argc==1) continue;
-            return 1;
+            goto Exit_UNORM;
         }
         
         input[strcspn(input, "\n")]=0; /* Remove NUL */
@@ -53,14 +65,14 @@ int main(int argc, char **argv) {
 
         if(input[0]=='\0') continue; /* ignore blank line */
 
-        if(strcmp(input, "END")==0) goto Exit;
-        else if(strcmp(input, "HLP")==0) {load_hlp(); continue;}
-        else if(strcmp(input, "CPY")==0) {load_cpy(); continue;}
-        else if(strcmp(input, "CLRSCR")==0) {load_clr(); continue;}
-        else if(strcmp(input, "CLRBFR")==0) {free(code); code=NULL; CodeSize=0; continue;}
-        else if(strcmp(input, "RUN")==0) {
+        if      (strcmp(input, "END")==0) goto Exit;
+        else if (strcmp(input, "HLP")==0) {load_hlp(); continue;}
+        else if (strcmp(input, "CRT")==0) {load_cpy(); continue;}
+        else if((strcmp(input, "CLR")==0)&&(argc==1)) {load_clr(); continue;}
+        else if((strcmp(input, "CLRBFR")==0)&&(argc==1)) {clear_buffer(&code, &CodeSize); continue;}
+        else if (strcmp(input, "RUN")==0) {
             if(argc==1) {
-                if(!CodeSize) {perror(YELLOW"EmptyBuffer"RED); continue;}
+                if(!(CodeSize-1)) {perror(YELLOW"EmptyBuffer"RED); continue;}
                 fork_pid = fork();
                 if(fork_pid<0) {perror("fork"); goto Exit;}
             } else {
@@ -69,20 +81,30 @@ int main(int argc, char **argv) {
             if(fork_pid==0) {
                 mem = mmap(NULL, CodeSize, PROT_READ | PROT_WRITE | PROT_EXEC,
                                 MAP_ANON | MAP_PRIVATE, -1, 0);
-                if (mem == MAP_FAILED) { perror("mmap"); return 1; }
+                if (mem == MAP_FAILED) { perror("mmap"); goto Exit_UNORM; }
 
                 memcpy(mem, code, CodeSize);
 
                 void (*fn)(void) = mem;
+
                 fn();
+
+                unsigned long my_rax;
+
+                __asm__ (
+                    "mov %%rax, %0\n\t"
+                    : "=r" (my_rax)
+                );
+
+                printf("RAX: %016lx\n", my_rax);
+
+
 
                 munmap(mem, CodeSize);
                 goto Exit;
             } else {
                 waitpid(-1, &status, 0);
-                free(code);
-                code=NULL;
-                CodeSize=0;
+                clear_buffer(&code, &CodeSize);
                 if (WIFEXITED(status)) {
                     int exit_status = WEXITSTATUS(status);
                     printf(GREEN"   exited normally with status: %d\n"RESET, exit_status);
@@ -101,7 +123,7 @@ int main(int argc, char **argv) {
         };
         if(str2hex_split(input, &code, &CodeSize)) {
             if(argc==1) continue;
-            return 1;
+            goto Exit_UNORM;
         }
     };
 
@@ -109,4 +131,10 @@ Exit:
     if(inp_ptr!=stdin) fclose(inp_ptr);
     free(code);
     return 0;
+
+Exit_UNORM:
+    if(inp_ptr!=stdin) fclose(inp_ptr);
+    free(code);
+    return 1;
+
 }

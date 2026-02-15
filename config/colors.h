@@ -28,58 +28,22 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <pgetopt-4.3/pgetopt.h>
-#include "pgetopt_error_handle.h"
+#pragma once
 
-int main(int argc, char **argv) {
-    pinit *init = pinit_create(
-"This is Zero Level Machine Interpreter.. \n\
-For executing machine language codes.");
+#define PINK        "\033[35m"
+#define RED         "\033[31m"
+#define GREEN       "\033[32m"
+#define YELLOW      "\033[33m"
+#define BLUE        "\033[34m"
+#define MAGENTA     "\033[35m"
+#define CYAN        "\033[36m"
+#define WHITE       "\033[37m"
+#define RESET       "\033[0m"
 
-    pclass *main = pclass_create(init, "main");
-    pinit_set_main_class(init, main);
-
-    palw main_allowed_options[] = {
-        { 1, "license" },
-        { 2, "version" },
-        { 2, "v" },
-        EOL
-    };
-    pclass_set_allowed_options(main, main_allowed_options);
-    
-    palw masters_avl[] = {
-        { 1, "run" },
-        EOL
-    };
-    switch(pinit_get_master_id(init)) {
-        case 1:
-            // zelemi_run(
-            //     /* argc= */ pinit_get_master_argc(init),
-            //     /* argv= */ pinit_get_master_argv(init)
-            // ); goto EXIT;
-            break;
-    }
-
-    usrerr error_ = pinit_parser(init, argc, argv);
-    if (zelemi_error_parser(error_, argv)) goto EXIT;
-
-    {   /* Isolating the environment */
-        register int opt_id, i=0;
-        while((opt_id=pclass_loop_get_opt_id(main, i))!=-1) {
-            switch(opt_id) {
-                case 1:
-                    // license();
-                    break;
-                case 2:
-                    // version();
-                    break;
-            }
-            ++i;
-        }
-    }
-    
-EXIT:
-    pclass_free(main);
-    pinit_free(init);
-    return 0;
-}
+#define BG_RED      "\033[41m"
+#define BG_GREEN    "\033[42m"
+#define BG_YELLOW   "\033[43m"
+#define BG_BLUE     "\033[44m"
+#define BG_MAGENTA  "\033[45m"
+#define BG_CYAN     "\033[46m"
+#define BG_WHITE    "\033[47m"

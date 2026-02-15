@@ -29,57 +29,34 @@
 */
 
 #include <pgetopt-4.3/pgetopt.h>
-#include "pgetopt_error_handle.h"
+#include <stdio.h>
+#include "colors.h" /* See config/colors.h */
+#include "errors.h" /* See config/errors.h */
 
-int main(int argc, char **argv) {
-    pinit *init = pinit_create(
-"This is Zero Level Machine Interpreter.. \n\
-For executing machine language codes.");
+#define _without_error          0
+#define _invalid_option         1
+#define _key_without_value      2
+#define _lack_of_class          3
+#define _class_syntax_error     4
+#define _invalid_value          5
+#define _lack_of_master         6
 
-    pclass *main = pclass_create(init, "main");
-    pinit_set_main_class(init, main);
+static void zelemi_printerr_user (char *err, char *opt) {
+    printf (RED"%s "RESET"%s\n%s\n", USER_ERR_HEADER, opt, err);
+}
 
-    palw main_allowed_options[] = {
-        { 1, "license" },
-        { 2, "version" },
-        { 2, "v" },
-        EOL
-    };
-    pclass_set_allowed_options(main, main_allowed_options);
-    
-    palw masters_avl[] = {
-        { 1, "run" },
-        EOL
-    };
-    switch(pinit_get_master_id(init)) {
-        case 1:
-            // zelemi_run(
-            //     /* argc= */ pinit_get_master_argc(init),
-            //     /* argv= */ pinit_get_master_argv(init)
-            // ); goto EXIT;
-            break;
-    }
-
-    usrerr error_ = pinit_parser(init, argc, argv);
-    if (zelemi_error_parser(error_, argv)) goto EXIT;
-
-    {   /* Isolating the environment */
-        register int opt_id, i=0;
-        while((opt_id=pclass_loop_get_opt_id(main, i))!=-1) {
-            switch(opt_id) {
-                case 1:
-                    // license();
-                    break;
-                case 2:
-                    // version();
-                    break;
-            }
-            ++i;
-        }
-    }
-    
-EXIT:
-    pclass_free(main);
-    pinit_free(init);
-    return 0;
+int __attribute__((nonnull))
+zelemi_error_parser (usrerr _error, char **argv) {
+    return  (_error.error == _invalid_option)
+    ?   (zelemi_printerr_user (INVALID_OPTION_ERR, argv[_error.index]), 1):
+            (_error.error == _key_without_value)  
+    ?   (zelemi_printerr_user (KEY_WITHOUT_VALUE_ERR, argv[_error.index]), 1): 
+            (_error.error == _lack_of_class)   
+    ?   (zelemi_printerr_user (LACK_OF_CLASS_ERR, argv[_error.index]), 1): 
+            (_error.error == _class_syntax_error)  
+    ?   (zelemi_printerr_user (CLASS_SYNTAX_ERR, argv[_error.index]), 1):
+            (_error.error == _invalid_value)
+    ?   (zelemi_printerr_user (INVALID_VALUE_ERR, argv[_error.index]), 1):
+            (_error.error == _lack_of_master)
+    ?   (zelemi_printerr_user (LACK_OF_MASTER_ERR, argv[_error.index]), 1): 0;
 }

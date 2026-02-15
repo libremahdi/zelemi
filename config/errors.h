@@ -28,58 +28,12 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <pgetopt-4.3/pgetopt.h>
-#include "pgetopt_error_handle.h"
+#define USER_ERR_HEADER "User Error:"
 
-int main(int argc, char **argv) {
-    pinit *init = pinit_create(
-"This is Zero Level Machine Interpreter.. \n\
-For executing machine language codes.");
+#define INVALID_OPTION_ERR      "invalid option."
+#define KEY_WITHOUT_VALUE_ERR   "Can't find value for the key."
+#define LACK_OF_CLASS_ERR       "There is no class under this name"
+#define CLASS_SYNTAX_ERR        "invalid class. Pay attention to the structure of the class.\nit should be like that: @[Class_name].[option]"
+#define INVALID_VALUE_ERR       "The value is invalid. This value cannot be used."
+#define LACK_OF_MASTER_ERR      "There is no class under this name"
 
-    pclass *main = pclass_create(init, "main");
-    pinit_set_main_class(init, main);
-
-    palw main_allowed_options[] = {
-        { 1, "license" },
-        { 2, "version" },
-        { 2, "v" },
-        EOL
-    };
-    pclass_set_allowed_options(main, main_allowed_options);
-    
-    palw masters_avl[] = {
-        { 1, "run" },
-        EOL
-    };
-    switch(pinit_get_master_id(init)) {
-        case 1:
-            // zelemi_run(
-            //     /* argc= */ pinit_get_master_argc(init),
-            //     /* argv= */ pinit_get_master_argv(init)
-            // ); goto EXIT;
-            break;
-    }
-
-    usrerr error_ = pinit_parser(init, argc, argv);
-    if (zelemi_error_parser(error_, argv)) goto EXIT;
-
-    {   /* Isolating the environment */
-        register int opt_id, i=0;
-        while((opt_id=pclass_loop_get_opt_id(main, i))!=-1) {
-            switch(opt_id) {
-                case 1:
-                    // license();
-                    break;
-                case 2:
-                    // version();
-                    break;
-            }
-            ++i;
-        }
-    }
-    
-EXIT:
-    pclass_free(main);
-    pinit_free(init);
-    return 0;
-}

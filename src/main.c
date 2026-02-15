@@ -35,10 +35,9 @@
 #include "config.h"
 
 int zelemi_run(int, char **);
-void handle_sigint(){};
 
 int main(int argc, char **argv) {
-    signal(SIGINT, handle_sigint);
+    signal(SIGINT, SIG_IGN);
 
     pinit *init = pinit_create(
 "This is Zero Level Machine Interpreter.. \n\

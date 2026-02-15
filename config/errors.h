@@ -31,9 +31,11 @@
 #define USER_ERR_HEADER         "User Error"
 #define FILE_NAME_ERROR_HEADER  "FileNameError"
 #define FILE_ERROR_HEADER       "FileError"
+#define INPUT_ERROR_HEADER      "InputError"
 
 #define FILE_NAME_ERROR         "Invalid file extension. The expected extension is '.mi'."
 #define FILE_ERROR              "Unable to open '%s'."
+#define INPUT_ERROR             "An error occurred in the input buffer."
 
 #define INVALID_OPTION_ERR      "invalid option."
 #define KEY_WITHOUT_VALUE_ERR   "Can't find value for the key."

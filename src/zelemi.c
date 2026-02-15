@@ -36,6 +36,9 @@
 #include "errors.h"
 #include "pgetopt_error_handle.h"
 
+int trim_start(char * const);
+int trim_end(char * const);
+
 int zelemi_run(int argc, char **argv) {
     unsigned char *code = malloc(1); /* opcodes Buffer in Memory */
     unsigned int code_size = 1; /* number of Buffer opcodes */
@@ -60,6 +63,23 @@ int zelemi_run(int argc, char **argv) {
         current_fp=fopen(argv[1], "r");
         if(!current_fp)
         {zelemi_printerr_sys(FILE_ERROR_HEADER, FILE_ERROR, argv[1]); return 1;}
+    }
+
+    while(1) {
+        if(argc==1) printf(PROMPT);
+
+        if(!fgets(input, sizeof(input), current_fp)) {
+            zelemi_printerr_sys(INPUT_ERROR_HEADER, INPUT_ERROR);
+            if (argc==1) continue;
+            return 1;
+        }
+
+        input[strcspn(input, "\n")]=0; /* Remove NUL */
+        if(strstr(input, ";")) *strstr(input, ";")='\0'; /* replaces comment characters with \0 to ignore comments anywhere in the line. */
+        trim_start(input);
+        trim_end(input);
+        if(input[0]=='\0') continue; /* ignore blank line */
+
     }
     return 0;
 }

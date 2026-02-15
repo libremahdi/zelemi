@@ -15,7 +15,7 @@ void load_cpy();
 void load_hlp();
 void load_clr();
 
-void get_register(); // Global Function
+int get_register(char *); // Global Function
 
 static void clear_buffer(unsigned char **code, unsigned int *CodeSize) {
     *CodeSize=1;
@@ -72,10 +72,10 @@ int main(int argc, char **argv) {
         else if (strcmp(input, "HLP")==0) {load_hlp(); continue;}
         else if (strcmp(input, "CRT")==0) {load_cpy(); continue;}
         else if((strcmp(input, "CLR")==0)&&(argc==1)) {load_clr(); continue;}
-        else if (strcmp(input, "GETREG")==0) {printf("Function Address: %p\n", (void*)get_register); continue;}
-        /* 48 B8 60 06 40 00 00 00 00 00 ; mov rax, [ADDR]
-         * FF D0 ; call rax
-        */
+        else if (strncmp(input, "GETREG", 6)==0) {
+            if(get_register(input)) if(argc!=1) goto Exit;
+            continue;
+        }
         else if((strcmp(input, "CLRBFR")==0)&&(argc==1)) {clear_buffer(&code, &CodeSize); continue;}
         else if (strcmp(input, "RUN")==0) {
             if(argc==1) {

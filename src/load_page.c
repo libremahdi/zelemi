@@ -7,9 +7,9 @@ void load_hlp() {
    HLP    : Show Help page and return to interpreter.\n\
    CRT    : Show Copyright Page and return to interpreter\n\
    RUN    : Save Machine opcodes and run.\n\
-   GETREG : Show get_register function address\n\
    CLR    : Clear Page\n\
-   CLRBFR : Clear OPCode Buffer\n");
+   CLRBFR : Clear OPCode Buffer\n\n\
+   GETREG : (X86_64 / AMD64) Show get_register function address for X86_64\n");
 }
 
 void load_cpy() {

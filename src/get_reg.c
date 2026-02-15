@@ -1,6 +1,10 @@
-#include<stdio.h>
+#include<stdio.h> /* printf */
+#include<string.h> /* strcmp, strdup */
+#include<stdlib.h> /* free */
 
-void get_register(){
+#include "colors.h"
+
+void get_register_X86_64() {
     unsigned long long RAX, RBX, RCX, RDX, RSI, RDI, RSP, RBP, R8, R9, R10, R11, R12, R13, R14, R15;
     __asm__ ("mov %%rax, %0" : "=r" (RAX));
     __asm__ ("mov %%rbx, %0" : "=r" (RBX));
@@ -29,4 +33,41 @@ void get_register(){
 
     printf("   RSP=%llx\n",RSP);
     printf("   RBP=%llx\n", RBP);
+    return;
+}
+
+int get_register(char *input){
+    #define COM_NAME "GETREG"
+    
+    char *param = strdup(input);
+    char *com = strtok(param, " ");
+    if(!com) {
+        printf("%s\n", input);
+    }
+    if(strcmp(com, COM_NAME)!=0) {
+        printf(YELLOW"InputError:"RESET" You are only allowed to enter hexadecimal numbers and mi-comment\n\
+                insert 'HLP' for more information.\n");
+        goto Exit_UNORM;
+    }
+    char *arg = strtok(NULL, " ");
+    if(!arg) {
+        printf(YELLOW"ArgumentError:"RESET" '%s' takes one argument.\n", COM_NAME);
+        goto Exit_UNORM;
+    }
+    if(strcmp(strtok(arg, " "), "X86_64")==0 || \
+       strcmp(strtok(arg, " "), "AMD64" )==0 ) {
+        printf("Function Address: %p\n", (void*)get_register_X86_64);
+        goto Exit;
+    } /* e.g. else if(strcmp(strtok(arg, " "), "POWERPC")==0) {return 0;} */
+    
+    printf(YELLOW"ArgumentError:"RESET" '%s' is not defined for '%s'\n", arg, COM_NAME);
+    goto Exit_UNORM;
+
+Exit:
+    free(param);
+    return 0;
+
+Exit_UNORM:
+    free(param);
+    return 1;
 }

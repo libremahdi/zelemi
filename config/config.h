@@ -28,62 +28,9 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include<stdio.h> /* printf */
-#include<pgetopt-4.3/pgetopt.h>
-#include"pgetopt_error_handle.h"
-#include"config.h"
+#pragma once
 
-int main(int argc, char **argv) {
-    pinit *init = pinit_create(
-"This is Zero Level Machine Interpreter.. \n\
-For executing machine language codes.");
+#define INTR_NAME       "Zelemi Interpreter"
+#define INTR_VERSION    "2.0"
 
-    pclass *main = pclass_create(init, "main");
-    pinit_set_main_class(init, main);
-
-    palw main_allowed_options[] = {
-        { 1, "license" },
-        { 2, "version" },
-        { 2, "v" },
-        EOL
-    };
-    pclass_set_allowed_options(main, main_allowed_options);
-    
-    palw masters_avl[] = {
-        { 1, "run" },
-        EOL
-    };
-    pinit_set_allowed_masters (init, masters_avl);
-
-    usrerr error_ = pinit_parser(init, argc, argv);
-    if (zelemi_error_parser(error_, argv)) goto EXIT;
-
-    switch(pinit_get_master_id(init)) {
-        case 1:
-            // zelemi_run(
-            //     /* argc= */ pinit_get_master_argc(init),
-            //     /* argv= */ pinit_get_master_argv(init)
-            // ); goto EXIT;
-            break;
-    }
-
-    {   /* Isolating the environment */
-        register int opt_id, i=0;
-        while((opt_id=pclass_loop_get_opt_id(main, i))!=-1) {
-            switch(opt_id) {
-                case 1:
-                    // license();
-                    break;
-                case 2:
-                    printf("%s\n", GET_VERSION);
-                    goto EXIT;
-            }
-            ++i;
-        }
-    }
-    
-EXIT:
-    pclass_free(main);
-    pinit_free(init);
-    return 0;
-}
+#define GET_VERSION     INTR_NAME " version " INTR_VERSION

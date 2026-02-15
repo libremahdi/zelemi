@@ -28,11 +28,29 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#pragma once
+#include <stdlib.h> /* malloc */
+#include <stdio.h> /* perror */
+#include <sys/utsname.h> /* uname utsname */
+#include "config.h"
 
-#define INTR_NAME       "Zelemi Interpreter"
-#define INTR_VERSION    "2.0"
+int zelemi_run(int argc, char **argv) {
+    unsigned char *code = malloc(1); /* opcodes Buffer in Memory */
+    unsigned int code_size = 1; /* number of Buffer opcodes */
+    char input[256]; /* User inputs is placed here. */
+    FILE *current_fp; /* file-ptr or stdin */
+    void *mem_opcode=NULL; /* Location of the opcodes that will be executed. */
+    void (*fn)(void)=NULL; /* The opcodes will be executed in the form of a function. */
+    int fork_pid=-1, status;
 
-#define GET_VERSION     INTR_NAME " version " INTR_VERSION
+    if(!code) { perror("malloc"); return 1; }
 
-#define STARTUP_MESSAGE_HINT "Type \"HLP\" or \"LIC\" for more information.\n"
+    if(argc==1) {
+        struct utsname os_info;
+        if(uname(&os_info)) { perror("uname"); return 1; }
+        printf("%s %s (main, %s %s) [%s (%s) for %s]\n", INTR_NAME, INTR_VERSION, __DATE__, __TIME__, os_info.nodename, os_info.sysname, os_info.machine);
+        printf(STARTUP_MESSAGE_HINT);
+    } else {
+        printf("FILE\n");
+    }
+    return 0;
+}

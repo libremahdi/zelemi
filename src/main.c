@@ -28,12 +28,18 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include<stdio.h> /* printf */
-#include<pgetopt-4.3/pgetopt.h>
-#include"pgetopt_error_handle.h"
-#include"config.h"
+#include <stdio.h> /* printf */
+#include <signal.h> /* signal */
+#include <pgetopt-4.3/pgetopt.h>
+#include "pgetopt_error_handle.h"
+#include "config.h"
+
+int zelemi_run(int, char **);
+void handle_sigint(){};
 
 int main(int argc, char **argv) {
+    signal(SIGINT, handle_sigint);
+
     pinit *init = pinit_create(
 "This is Zero Level Machine Interpreter.. \n\
 For executing machine language codes.");
@@ -60,11 +66,11 @@ For executing machine language codes.");
 
     switch(pinit_get_master_id(init)) {
         case 1:
-            // zelemi_run(
-            //     /* argc= */ pinit_get_master_argc(init),
-            //     /* argv= */ pinit_get_master_argv(init)
-            // ); goto EXIT;
-            break;
+            if (zelemi_run(
+                /* argc= */ pinit_get_master_argc(init),
+                /* argv= */ pinit_get_master_argv(init)
+            )) goto EXIT_UNNORM;
+            goto EXIT;
     }
 
     {   /* Isolating the environment */
@@ -86,4 +92,8 @@ EXIT:
     pclass_free(main);
     pinit_free(init);
     return 0;
+EXIT_UNNORM:
+    pclass_free(main);
+    pinit_free(init);
+    return 1;
 }

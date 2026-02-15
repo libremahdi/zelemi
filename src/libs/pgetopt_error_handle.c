@@ -28,8 +28,9 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <pgetopt-4.3/pgetopt.h>
-#include <stdio.h>
+#include <stdio.h> /* printf, stdout, vfprintf */
+#include <stdarg.h> /* va_start, va_end, va_list */
+#include "pgetopt_error_handle.h"
 #include "colors.h" /* See config/colors.h */
 #include "errors.h" /* See config/errors.h */
 
@@ -41,12 +42,21 @@
 #define _invalid_value          5
 #define _lack_of_master         6
 
-static void zelemi_printerr_user (char *err, char *opt) {
-    printf (RED"%s "RESET"%s\n%s\n", USER_ERR_HEADER, opt, err);
+void zelemi_printerr_user(char *err, char *opt) {
+    printf (RED"%s:"RESET" %s\n%s\n", USER_ERR_HEADER, opt, err);
+}
+
+void zelemi_printerr_sys(char *header, char *comment, ...) {
+    va_list args;
+    va_start(args, comment);
+    printf(RED"%s:"RESET" ", header);
+    vfprintf(stdout, comment, args);
+    printf("\n");
+    va_end(args);
 }
 
 int __attribute__((nonnull))
-zelemi_error_parser (usrerr _error, char **argv) {
+zelemi_error_parser(usrerr _error, char **argv) {
     return  (_error.error == _invalid_option)
     ?   (zelemi_printerr_user (INVALID_OPTION_ERR, argv[_error.index]), 1):
             (_error.error == _key_without_value)  

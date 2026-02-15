@@ -30,8 +30,11 @@
 
 #include <stdlib.h> /* malloc */
 #include <stdio.h> /* perror */
+#include <string.h> /* strchr, strcmp */
 #include <sys/utsname.h> /* uname utsname */
 #include "config.h"
+#include "errors.h"
+#include "pgetopt_error_handle.h"
 
 int zelemi_run(int argc, char **argv) {
     unsigned char *code = malloc(1); /* opcodes Buffer in Memory */
@@ -44,13 +47,19 @@ int zelemi_run(int argc, char **argv) {
 
     if(!code) { perror("malloc"); return 1; }
 
-    if(argc==1) {
+    if(argc==1) { /* It runs in console mode and takes input from the user. */
         struct utsname os_info;
         if(uname(&os_info)) { perror("uname"); return 1; }
         printf("%s %s (main, %s %s) [%s (%s) for %s]\n", INTR_NAME, INTR_VERSION, __DATE__, __TIME__, os_info.nodename, os_info.sysname, os_info.machine);
         printf(STARTUP_MESSAGE_HINT);
-    } else {
-        printf("FILE\n");
+        current_fp=stdin;
+    } else { /* It runs in file mode and reads data from a file. */
+        if((!strchr(argv[1], '.'))||(strcmp(strchr(argv[1], '.'), ".mi")!=0))
+        {zelemi_printerr_sys(FILE_NAME_ERROR_HEADER, FILE_NAME_ERROR); return 1;}
+
+        current_fp=fopen(argv[1], "r");
+        if(!current_fp)
+        {zelemi_printerr_sys(FILE_ERROR_HEADER, FILE_ERROR, argv[1]); return 1;}
     }
     return 0;
 }

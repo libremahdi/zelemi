@@ -28,7 +28,12 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define USER_ERR_HEADER "User Error:"
+#define USER_ERR_HEADER         "User Error"
+#define FILE_NAME_ERROR_HEADER  "FileNameError"
+#define FILE_ERROR_HEADER       "FileError"
+
+#define FILE_NAME_ERROR         "Invalid file extension. The expected extension is '.mi'."
+#define FILE_ERROR              "Unable to open '%s'."
 
 #define INVALID_OPTION_ERR      "invalid option."
 #define KEY_WITHOUT_VALUE_ERR   "Can't find value for the key."

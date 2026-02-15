@@ -27,7 +27,10 @@
    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+#include <pgetopt-4.3/pgetopt.h>
 
 #pragma once
 
 int zelemi_error_parser (usrerr, char **);
+void zelemi_printerr_user (char *, char *);
+void zelemi_printerr_sys(char *, char *, ...);

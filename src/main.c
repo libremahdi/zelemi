@@ -72,8 +72,8 @@ For executing machine language codes.");
         while((opt_id=pclass_loop_get_opt_id(main, i))!=-1) {
             switch(opt_id) {
                 case 1:
-                    // license();
-                    break;
+                    printf("%s\n", "BSD 3-Clause License\nCopyright (c) 2026, Mahdi Hosseini Asaad");
+                    goto EXIT;
                 case 2:
                     printf("%s\n", GET_VERSION);
                     goto EXIT;

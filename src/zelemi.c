@@ -70,7 +70,7 @@ int zelemi_run(int argc, char **argv) {
         {zelemi_printerr_sys(FILE_ERROR_HEADER, FILE_ERROR, argv[1]); goto RET_1;}
     }
 
-    while(1) {
+    for(;;) {
         if(argc==1) printf(PROMPT);
 
         if(!fgets(input, sizeof(input), current_fp)) {

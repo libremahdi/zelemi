@@ -1,7 +1,8 @@
-#include<stdio.h> /* printf */
-#include"config.h"
+#include <stdio.h> /* printf */
+#include "config.h"
+#include "c_struct.h"
 
-int zelemi_command_lic(int argc, char *opt) {
+int zelemi_command_lic(int argc, char *opt, struct DATA_STRUCT *data_pack) {
     if(argc==1) {
         printf("BSD 3-Clause License \n\n\
 Copyright (c) 2026, Mahdi Hosseini Asaad \n\n\

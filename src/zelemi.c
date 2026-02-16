@@ -34,6 +34,7 @@
 #include <sys/utsname.h> /* uname utsname */
 #include "config.h"
 #include "errors.h"
+#include "c_struct.h"
 #include "pgetopt_error_handle.h"
 
 int trim_start(char * const);
@@ -80,6 +81,7 @@ int zelemi_run(int argc, char **argv) {
         trim_end(input);
         if(input[0]=='\0') continue; /* ignore blank line */
 
+        c_run_commands(argc, input, NULL);
     }
     return 0;
 }

@@ -39,6 +39,7 @@
 
 int trim_start(char * const);
 int trim_end(char * const);
+int str2hex_split(char *, struct DATA_STRUCT *);
 
 int zelemi_run(int argc, char **argv) {
     struct DATA_STRUCT *data_pack=malloc(sizeof(struct DATA_STRUCT));
@@ -93,6 +94,7 @@ int zelemi_run(int argc, char **argv) {
             -2: Command not find (goto the hex segment)
             -3: exit or continue Auto by Console/file mode
           */
+          case  0: continue;
           case -1: goto RET_0;
           case  1: goto RET_1;
           case -3: if(argc==1) continue; else goto RET_1;
@@ -100,6 +102,11 @@ int zelemi_run(int argc, char **argv) {
         /* It nullifies the effect of strtok. If option_ is NULL, 
            it means the command is a single part, and strtok has made no changes to the command.
         */ if(option_) command[strcspn(command, "\n")]=' ';
+
+        if (str2hex_split(input, data_pack)) {
+          if(argc==1) continue;
+          goto RET_1;
+        }
     }
   RET_0:
       free(data_pack);

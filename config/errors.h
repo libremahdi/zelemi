@@ -39,6 +39,7 @@
 #define FILE_ERROR              "Unable to open '%s'."
 #define INPUT_ERROR             "An error occurred in the input buffer."
 #define ARGUMENT_ERROR          "The argument '%s' is undefined."
+#define LOAD_HEX_INPUT_ERROR    "'%s' is undefined. Only hexadecimal numbers and basic commands are available."
 
 #define INVALID_OPTION_ERR      "invalid option."
 #define KEY_WITHOUT_VALUE_ERR   "Can't find value for the key."
@@ -46,4 +47,3 @@
 #define CLASS_SYNTAX_ERR        "invalid class. Pay attention to the structure of the class.\nit should be like that: @[Class_name].[option]"
 #define INVALID_VALUE_ERR       "The value is invalid. This value cannot be used."
 #define LACK_OF_MASTER_ERR      "There is no class under this name"
-

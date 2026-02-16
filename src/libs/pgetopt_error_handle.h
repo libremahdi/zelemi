@@ -31,6 +31,6 @@
 
 #pragma once
 
-int  zelemi_error_parser (usrerr, char **);
-void zelemi_printerr_user (char *, char *);
+int  zelemi_error_parser(usrerr, char **);
+void zelemi_printerr_user(char *, char *);
 void zelemi_printerr_sys(char *, char *, ...);

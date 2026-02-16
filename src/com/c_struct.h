@@ -11,3 +11,4 @@ int zelemi_command_clr(int argc, char *opt);
 int zelemi_command_adr(int argc, char *opt);
 int zelemi_command_hlp(int argc, char *opt);
 int zelemi_command_lic(int argc, char *opt);
+int zelemi_command_end(int argc, char *opt);

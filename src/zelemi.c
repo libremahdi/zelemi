@@ -81,7 +81,15 @@ int zelemi_run(int argc, char **argv) {
         trim_end(input);
         if(input[0]=='\0') continue; /* ignore blank line */
 
-        c_run_commands(argc, input, NULL);
+        switch(c_run_commands(argc, input, NULL)) { 
+          /* 0: continue the loop
+             1: exit with error
+            -1: exit Normally
+            -2: Command not find (goto the hex segment)
+          */
+          case -1: return 0;
+          case  1: return 1;
+        }
     }
     return 0;
 }

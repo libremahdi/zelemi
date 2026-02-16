@@ -80,7 +80,9 @@ int zelemi_run(int argc, char **argv) {
         trim_start(input); trim_end(input);
         if(input[0]=='\0') continue; /* ignore blank line */
 
-        switch(c_run_commands(argc, input, NULL)) { 
+        char *command = strtok(input, " ");
+        char *option_ = strtok(NULL , " ");
+        switch(c_run_commands(argc, command, option_)) { 
           /* 0: continue the loop
              1: exit with error
             -1: exit Normally
@@ -89,6 +91,9 @@ int zelemi_run(int argc, char **argv) {
           case -1: return 0;
           case  1: return 1;
         }
+        /* It nullifies the effect of strtok. If option_ is NULL, 
+           it means the command is a single part, and strtok has made no changes to the command.
+        */ if(option_) command[strcspn(command, "\n")]=' ';
     }
     return 0;
 }

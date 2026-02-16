@@ -18,7 +18,7 @@ int str2hex_split(char *input, struct DATA_STRUCT *data_pack) {
     while (token) {
         if(isn_hexadecimal(token)) goto RET_ERR;
         if (sscanf(token, "%X", &HEX_INT) == 1) {
-            (data_pack->code)[data_pack->code_size-1] = (unsigned char) HEX_INT;
+            (data_pack->code)[data_pack->code_size] = (unsigned char) HEX_INT;
             if(data_pack->code_capa<=data_pack->code_size) {
                 data_pack->code = (unsigned char *) realloc(data_pack->code, sizeof(unsigned char) * (data_pack->code_size+1));
                 if (!data_pack->code) { perror("realloc"); return 1; }

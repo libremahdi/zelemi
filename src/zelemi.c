@@ -45,7 +45,7 @@ int zelemi_run(int argc, char **argv) {
     struct DATA_STRUCT *data_pack=malloc(sizeof(struct DATA_STRUCT));
     
     data_pack->code=malloc(1);
-    data_pack->code_size=1;
+    data_pack->code_size=0;
     data_pack->code_capa=1;
     
     char input[256]; /* User inputs is placed here. */
@@ -74,7 +74,7 @@ int zelemi_run(int argc, char **argv) {
     for(;;) {
         if(argc==1) printf(PROMPT);
 
-        if(!fgets(input, sizeof(input), current_fp)) {
+        if((fgets(input, sizeof(input), current_fp)==NULL)&&(!feof(current_fp))) {
             zelemi_printerr_sys(INPUT_ERROR_HEADER, INPUT_ERROR);
             if (argc==1) continue;
             goto RET_1;

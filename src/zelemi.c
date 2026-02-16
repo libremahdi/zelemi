@@ -48,7 +48,7 @@ int zelemi_run(int argc, char **argv) {
     void *mem_opcode=NULL; /* Location of the opcodes that will be executed. */
     void (*fn)(void)=NULL; /* The opcodes will be executed in the form of a function. */
     int fork_pid=-1, status;
-
+    
     if(!code) { perror("malloc"); return 1; }
 
     if(argc==1) { /* It runs in console mode and takes input from the user. */

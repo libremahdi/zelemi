@@ -65,7 +65,7 @@ int zelemi_run(int argc, char **argv) {
         current_fp=fopen(argv[1], "r");
         if(!current_fp)
         {zelemi_printerr_sys(FILE_ERROR_HEADER, FILE_ERROR, argv[1]); goto RET_1;}
-    } else {zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, TOO_MANY_ARGC_ERROR); goto RET_1;}
+    } else {zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, RUN_TOO_MANY_ARGC_ERROR); goto RET_1;}
 
     for(;;) {
         if(argc==1) printf(PROMPT);

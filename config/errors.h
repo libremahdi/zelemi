@@ -42,7 +42,9 @@
 #define ARGUMENT_ERROR          "The argument '%s' is undefined."
 #define LOAD_HEX_INPUT_ERROR    "'%s' is undefined. Only hexadecimal numbers and basic commands are available."
 #define EMPTY_BUFFER_ERROR      "No opcode available for execution."
-#define TOO_MANY_ARGC_ERROR     "zelemi-run takes only one argument, which is the path to the source code file."
+#define RUN_TOO_MANY_ARGC_ERROR "zelemi-run takes only one argument, which is the path to the source code file."
+#define ADR_TAKES_ONE_ARG_ERROR "The ADR command takes one argument. see 'HLP'"
+
 
 #define INVALID_OPTION_ERR      "invalid option."
 #define KEY_WITHOUT_VALUE_ERR   "Can't find value for the key."

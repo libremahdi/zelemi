@@ -27,12 +27,13 @@
    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+
 #include "colors.h"
 
 #pragma once
 
 #define INTR_NAME       "Zelemi Interpreter"
-#define INTR_VERSION    "2.0"
+#define INTR_VERSION    "3.0"
 #define GET_VERSION     INTR_NAME " version " INTR_VERSION
 
 #define STARTUP_MESSAGE_HINT "Type \"HLP\" or \"LIC\" for more information.\n"

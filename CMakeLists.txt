@@ -29,6 +29,8 @@ set_target_properties(zelemi PROPERTIES
 install(TARGETS zelemi DESTINATION /usr/bin)
 
 add_custom_target(uninstall
-    COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:zelemi>
+    COMMAND ${CMAKE_COMMAND} -E remove /usr/bin/zelemi
     COMMENT "Uninstalling zelemi"
 )
+
+message(STATUS "To uninstall zelemi, run: make uninstall")

@@ -40,16 +40,16 @@ In the `example` folder, you can find a number of simple examples in machine lan
 To execute a file, simply write:
 
 ```
-zelemi file.mi
+zelemi run file.mi
 ```
 
 After installation, go to the example folder and run the file hello-world.mi as follows:
 
 ```
-$ zelemi hello-world.mi
+$ zelemi run hello-world.mi
 Hello World!
 ```
-If you don't provide any input and just type `zelemi`, it will run in console mode.
+If you don't provide any input and just type `zelemi run`, it will run in console mode.
 
 ## License
 

@@ -51,15 +51,15 @@ For executing machine language codes.");
     pinit_set_main_class(init, main);
 
     palw main_allowed_options[] = {
-        { 1, "license" },
-        { 2, "version" },
+        { 1, "license", "displays the software license."},
+        { 2, "version", "It displays the software version"},
         { 2, "v" },
         EOL
     };
     pclass_set_allowed_options(main, main_allowed_options);
     
     palw masters_avl[] = {
-        { 1, "run" },
+        { 1, "run", "To execute commands from a file or run in console mode."},
         EOL
     };
     pinit_set_allowed_masters (init, masters_avl);

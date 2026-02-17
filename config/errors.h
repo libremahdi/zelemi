@@ -43,7 +43,8 @@
 #define LOAD_HEX_INPUT_ERROR    "'%s' is undefined. Only hexadecimal numbers and basic commands are available."
 #define EMPTY_BUFFER_ERROR      "No opcode available for execution."
 #define RUN_TOO_MANY_ARGC_ERROR "zelemi-run takes only one argument, which is the path to the source code file."
-#define ADR_TAKES_ONE_ARG_ERROR "The ADR command takes one argument. see 'HLP'"
+#define ADR_TAKES_ONE_ARG_ERROR "The 'ADR' command takes one argument. see 'HLP'"
+#define HLP_TAKEN_ANY_ARG_ERROR "The 'HLP' command does not take any arguments"
 
 
 #define INVALID_OPTION_ERR      "invalid option."

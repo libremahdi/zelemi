@@ -70,7 +70,7 @@ void get_register_X86_64() {
 int zelemi_command_adr(int argc, char *opt, struct DATA_STRUCT *data_pack) {
     if(!opt) {zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, ADR_TAKES_ONE_ARG_ERROR); return -3;}
     
-    if((strcmp(opt, "X86_64")==0) || (strcmp(opt, "AMD64")==0))
+    if((strcmp(opt, "REG-X86_64")==0) || (strcmp(opt, "REG-AMD64")==0))
     { printf("Function Address: %p\n", (void*)get_register_X86_64); return 0; /* continue to loop */ }
     else {
         zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, ARGUMENT_ERROR, opt);

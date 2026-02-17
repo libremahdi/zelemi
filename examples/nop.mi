@@ -1,0 +1,11 @@
+; NOP Command for X86_64-intel
+
+; The NOP instruction (No Operation) in assembly language performs no action, 
+; serving primarily as a placeholder or for timing purposes without altering processor state.
+
+; The RET instruction serves as the return point of the program, determining where 
+; execution should resume after a function or subroutine is completed.
+
+90  ;nop
+C3  ;ret
+RUN

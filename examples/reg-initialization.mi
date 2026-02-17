@@ -1,0 +1,22 @@
+; Register Initialization in x86_64
+
+B8 01 00 00 00 ; mov rax, 1
+BB 02 00 00 00 ; mov rbx, 2
+B9 03 00 00 00 ; mov rcx, 3
+BA 04 00 00 00 ; mov rdx, 4
+BE 05 00 00 00 ; mov rsi, 5
+BF 06 00 00 00 ; mov rdi, 6
+
+49 C7 C0 09 00 00 00 ; mov r8 , 9
+49 C7 C1 0A 00 00 00 ; mov r9 , A
+49 C7 C2 0B 00 00 00 ; mov r10, B
+49 C7 C3 0C 00 00 00 ; mov r11, C
+49 C7 C4 0D 00 00 00 ; mov r12, C
+49 C7 C5 0E 00 00 00 ; mov r13, C
+49 C7 C6 0F 00 00 00 ; mov r14, C
+49 C7 C7 10 00 00 00 ; mov r15, C
+
+C3 ; ret
+
+GETREG AMD64 ; get-reg function pointer
+RUN

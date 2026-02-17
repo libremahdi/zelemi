@@ -35,7 +35,7 @@
 #include "config.h"
 #include "errors.h"
 #include "c_struct.h"
-#include "pgetopt_error_handle.h"
+#include "error_handle.h"
 
 int trim_start(char * const);
 int trim_end(char * const);
@@ -44,17 +44,13 @@ int str2hex_split(char *, struct DATA_STRUCT *);
 int zelemi_run(int argc, char **argv) {
     struct DATA_STRUCT *data_pack=malloc(sizeof(struct DATA_STRUCT));
     
-    data_pack->code=malloc(1);
+    data_pack->code=NULL;
     data_pack->code_size=0;
-    data_pack->code_capa=1;
+    data_pack->code_capa=0;
     
     char input[256]; /* User inputs is placed here. */
-    FILE *current_fp; /* file-ptr or stdin */
-    void *mem_opcode=NULL; /* Location of the opcodes that will be executed. */
-    void (*fn)(void)=NULL; /* The opcodes will be executed in the form of a function. */
-    int fork_pid=-1, status;
-    
-    if(!data_pack->code) { perror("malloc"); goto RET_1; }
+    unsigned input_size;
+    FILE *current_fp=NULL; /* file-ptr or stdin */
 
     if(argc==1) { /* It runs in console mode and takes input from the user. */
         struct utsname os_info;
@@ -62,14 +58,14 @@ int zelemi_run(int argc, char **argv) {
         printf("%s %s (main, %s %s) [%s (%s) for %s]\n", INTR_NAME, INTR_VERSION, __DATE__, __TIME__, os_info.nodename, os_info.sysname, os_info.machine);
         printf(STARTUP_MESSAGE_HINT);
         current_fp=stdin;
-    } else { /* It runs in file mode and reads data from a file. */
-        if((!strchr(argv[1], '.'))||(strcmp(strchr(argv[1], '.'), ".mi")!=0))
+    } else if(argc==2) { /* It runs in file mode and reads data from a file. */
+        if((!strchr(argv[1], '.'))||(strcmp(strrchr(argv[1], '.'), ".mi")!=0))
         {zelemi_printerr_sys(FILE_NAME_ERROR_HEADER, FILE_NAME_ERROR); goto RET_1;}
 
         current_fp=fopen(argv[1], "r");
         if(!current_fp)
         {zelemi_printerr_sys(FILE_ERROR_HEADER, FILE_ERROR, argv[1]); goto RET_1;}
-    }
+    } else {zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, TOO_MANY_ARGC_ERROR); goto RET_1;}
 
     for(;;) {
         if(argc==1) printf(PROMPT);
@@ -85,6 +81,7 @@ int zelemi_run(int argc, char **argv) {
         trim_start(input); trim_end(input);
         if(input[0]=='\0') continue; /* ignore blank line */
 
+        input_size = strlen(input);
         char *command = strtok(input, " ");
         char *option_ = strtok(NULL , " ");
         switch(c_run_commands(argc, command, option_, data_pack)) { 
@@ -97,11 +94,16 @@ int zelemi_run(int argc, char **argv) {
           case  0: continue;
           case -1: goto RET_0;
           case  1: goto RET_1;
-          case -3: if(argc==1) continue; else goto RET_1;
+          case -3: 
+              if(argc==1) continue; 
+              else goto RET_1;
         }
         /* It nullifies the effect of strtok. If option_ is NULL, 
            it means the command is a single part, and strtok has made no changes to the command.
-        */ if(option_) command[strcspn(command, "\n")]=' ';
+        */
+        for(register unsigned int in_1=0 ; in_1<input_size-1 ; ++in_1) {
+          if(input[in_1]=='\0') input[in_1]=' ';
+        }
 
         if (str2hex_split(input, data_pack)) {
           if(argc==1) continue;
@@ -109,9 +111,13 @@ int zelemi_run(int argc, char **argv) {
         }
     }
   RET_0:
-      free(data_pack);
+      if(current_fp) if(current_fp!=stdin) fclose(current_fp);
+      if(data_pack->code) free(data_pack->code);
+      if(data_pack) free(data_pack);
       return 0;
   RET_1:
-      free(data_pack);
+      if(current_fp) if(current_fp!=stdin) fclose(current_fp);
+      if(data_pack->code) free(data_pack->code);
+      if(data_pack) free(data_pack);
       return 1;
 }

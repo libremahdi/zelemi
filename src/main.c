@@ -31,19 +31,23 @@
 #include <stdio.h> /* printf */
 #include <signal.h> /* signal */
 #include <pgetopt-4.3/pgetopt.h>
-#include "pgetopt_error_handle.h"
+#include "error_handle.h"
 #include "config.h"
 
 int zelemi_run(int, char **);
 
 int main(int argc, char **argv) {
+    pinit *init;
+    pclass *main;
+    usrerr zelemi_err;
+
     signal(SIGINT, SIG_IGN);
 
-    pinit *init = pinit_create(
+    init = pinit_create(
 "This is Zero Level Machine Interpreter.. \n\
 For executing machine language codes.");
 
-    pclass *main = pclass_create(init, "main");
+    main = pclass_create(init, "main");
     pinit_set_main_class(init, main);
 
     palw main_allowed_options[] = {
@@ -60,8 +64,8 @@ For executing machine language codes.");
     };
     pinit_set_allowed_masters (init, masters_avl);
 
-    usrerr error_ = pinit_parser(init, argc, argv);
-    if (zelemi_error_parser(error_, argv)) goto EXIT;
+    zelemi_err = pinit_parser(init, argc, argv);
+    if (zelemi_error_parser(zelemi_err, argv)) goto EXIT;
 
     switch(pinit_get_master_id(init)) {
         case 1:

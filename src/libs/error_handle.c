@@ -27,10 +27,42 @@
    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#include <pgetopt-4.3/pgetopt.h>
 
-#pragma once
+#include <stdio.h> /* printf, stdout, vfprintf */
+#include <stdarg.h> /* va_start, va_end, va_list */
+#include "error_handle.h"
+#include "colors.h" /* See config/colors.h */
+#include "errors.h" /* See config/errors.h */
 
-int  zelemi_error_parser(usrerr, char **);
-void zelemi_printerr_user(char *, char *);
-void zelemi_printerr_sys(char *, char *, ...);
+#define _without_error          0
+#define _invalid_option         1
+#define _key_without_value      2
+#define _lack_of_class          3
+#define _class_syntax_error     4
+#define _invalid_value          5
+#define _lack_of_master         6
+
+void zelemi_printerr_sys(char *header, char *comment, ...) {
+    va_list args;
+    va_start(args, comment);
+    printf(RED"%s:"RESET" ", header);
+    vfprintf(stdout, comment, args);
+    printf("\n");
+    va_end(args);
+}
+
+int __attribute__((nonnull))
+zelemi_error_parser(usrerr _error, char **argv) {
+    return  (_error.error == _invalid_option)
+    ?   (zelemi_printerr_sys (INVALID_OPTION_ERR, argv[_error.index]), 1):
+            (_error.error == _key_without_value)  
+    ?   (zelemi_printerr_sys (KEY_WITHOUT_VALUE_ERR, argv[_error.index]), 1): 
+            (_error.error == _lack_of_class)   
+    ?   (zelemi_printerr_sys (LACK_OF_CLASS_ERR, argv[_error.index]), 1): 
+            (_error.error == _class_syntax_error)  
+    ?   (zelemi_printerr_sys (CLASS_SYNTAX_ERR, argv[_error.index]), 1):
+            (_error.error == _invalid_value)
+    ?   (zelemi_printerr_sys (INVALID_VALUE_ERR, argv[_error.index]), 1):
+            (_error.error == _lack_of_master)
+    ?   (zelemi_printerr_sys (LACK_OF_MASTER_ERR, argv[_error.index]), 1): 0;
+}

@@ -3,7 +3,7 @@
 #include <stdio.h> /* sscanf perror */
 #include "c_struct.h"
 #include "errors.h"
-#include "pgetopt_error_handle.h"
+#include "error_handle.h"
 
 static int isn_hexadecimal(const char *input) {
     char *endptr;
@@ -14,21 +14,21 @@ static int isn_hexadecimal(const char *input) {
 int str2hex_split(char *input, struct DATA_STRUCT *data_pack) {
     unsigned int HEX_INT;
     char *token = strtok(input, " ");
-    
     while (token) {
         if(isn_hexadecimal(token)) goto RET_ERR;
         if (sscanf(token, "%X", &HEX_INT) == 1) {
-            (data_pack->code)[data_pack->code_size] = (unsigned char) HEX_INT;
             if(data_pack->code_capa<=data_pack->code_size) {
-                data_pack->code = (unsigned char *) realloc(data_pack->code, sizeof(unsigned char) * (data_pack->code_size+1));
+                data_pack->code = (unsigned char *) realloc(data_pack->code, sizeof(unsigned char) * (data_pack->code_capa+1));
                 if (!data_pack->code) { perror("realloc"); return 1; }
                 (data_pack->code_capa)++;
             }
+            (data_pack->code)[data_pack->code_size] = (unsigned char) HEX_INT;
             (data_pack->code_size)++;
         } else {
             goto RET_ERR;
         }
         token = strtok(NULL, " ");
+        if(!token) break;
     }
     return 0;
 

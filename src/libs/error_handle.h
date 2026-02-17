@@ -27,26 +27,9 @@
    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+#include <pgetopt-4.3/pgetopt.h>
 
-#define USER_ERR_HEADER         "User Error"
+#pragma once
 
-#define FILE_NAME_ERROR_HEADER  "FileNameError"
-#define FILE_ERROR_HEADER       "FileError"
-#define INPUT_ERROR_HEADER      "InputError"
-#define ARGUMENT_ERROR_HEADER   "ArgumentError"
-#define EMPTY_BUFFER_HEADER     "EmptyBuffer"
-
-#define FILE_NAME_ERROR         "Invalid file extension. The expected extension is '.mi'."
-#define FILE_ERROR              "Unable to open '%s'."
-#define INPUT_ERROR             "An error occurred in the input buffer."
-#define ARGUMENT_ERROR          "The argument '%s' is undefined."
-#define LOAD_HEX_INPUT_ERROR    "'%s' is undefined. Only hexadecimal numbers and basic commands are available."
-#define EMPTY_BUFFER_ERROR      "No opcode available for execution."
-#define TOO_MANY_ARGC_ERROR     "zelemi-run takes only one argument, which is the path to the source code file."
-
-#define INVALID_OPTION_ERR      "invalid option."
-#define KEY_WITHOUT_VALUE_ERR   "Can't find value for the key."
-#define LACK_OF_CLASS_ERR       "There is no class under this name"
-#define CLASS_SYNTAX_ERR        "invalid class. Pay attention to the structure of the class.\nit should be like that: @[Class_name].[option]"
-#define INVALID_VALUE_ERR       "The value is invalid. This value cannot be used."
-#define LACK_OF_MASTER_ERR      "There is no class under this name"
+int  zelemi_error_parser(usrerr, char **);
+void zelemi_printerr_sys(char *, char *, ...);

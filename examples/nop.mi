@@ -6,6 +6,6 @@
 ; The RET instruction serves as the return point of the program, determining where 
 ; execution should resume after a function or subroutine is completed.
 
-90  ;nop
-C3  ;ret
+90 ; nop
+C3 ; ret
 RUN

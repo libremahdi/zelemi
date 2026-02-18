@@ -1,12 +1,11 @@
 ; Get input from user for X86_64-Intel
 
-b8 00 00 00 00  ; mov rax, 0
-bf 00 00 00 00  ; mov rdi, 0
-be 00 00 00 00  ; mov rsi, 0
-ba 40 00 00 00  ; mov rdx, 64
-0f 05           ; syscall
-b8 3c 00 00 00  ; mov rax, 60
-31 ff           ; xor rdi, rdi
-0f 05           ; syscall
+b8 00 00 00 00  ; mov rax, 0  ; sys_read for syscall
+bf 00 00 00 00  ; mov rdi, 0  ; stdin
+be 00 00 00 00  ; mov rsi, 0  ; Buffer Address
+ba 40 00 00 00  ; mov rdx, 64 ; Read Size
+0f 05           ; syscall     ; Call sys_read
+b8 3c 00 00 00  ; mov rax, 60 ; sys_exit for syscall
+0f 05           ; syscall     ; sys_exit
 
 RUN             ; zelemi Command

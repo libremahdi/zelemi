@@ -1,7 +1,10 @@
 ; return 1 for X86_64-intel
 ; This program returns exit code 1.
 
-b8 01 00 00 00      ; mov eax, 1
-bb 01 00 00 00      ; mov ebx, 1
-cd 80               ; int 0x80
+b8 01 00 00 00      ; mov eax, 1 ; sys_exit for syscall
+bb 01 00 00 00      ; mov ebx, 1 ; return value (1)
+cd 80               ; int 0x80   ; instead of syscall
 RUN
+
+; You can check the exit status of this example using 
+; the command `echo $?` in Unix-based systems.

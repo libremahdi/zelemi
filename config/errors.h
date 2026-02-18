@@ -46,10 +46,9 @@
 #define ADR_TAKES_ONE_ARG_ERROR "The 'ADR' command takes one argument. see 'HLP'"
 #define HLP_TAKEN_ANY_ARG_ERROR "The 'HLP' command does not take any arguments"
 
-
-#define INVALID_OPTION_ERR      "invalid option."
-#define KEY_WITHOUT_VALUE_ERR   "Can't find value for the key."
-#define LACK_OF_CLASS_ERR       "There is no class under this name"
-#define CLASS_SYNTAX_ERR        "invalid class. Pay attention to the structure of the class.\nit should be like that: @[Class_name].[option]"
-#define INVALID_VALUE_ERR       "The value is invalid. This value cannot be used."
-#define LACK_OF_MASTER_ERR      "There is no class under this name"
+#define INVALID_OPTION_ERR      "invalid option :"
+#define KEY_WITHOUT_VALUE_ERR   "Can't find value for the key :"
+#define LACK_OF_CLASS_ERR       "There is no class under this name :"
+#define CLASS_SYNTAX_ERR        "invalid class. Pay attention to the structure of the class.\nit should be like that: @[Class_name].[option] Not"
+#define INVALID_VALUE_ERR       "The value is invalid. This value cannot be used :"
+#define LACK_OF_MASTER_ERR      "There is no master under this name :"

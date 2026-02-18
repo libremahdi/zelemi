@@ -45,7 +45,7 @@
 void zelemi_printerr_sys(char *header, char *comment, ...) {
     va_list args;
     va_start(args, comment);
-    printf(RED"%s:"RESET" ", header);
+    printf(RED"%s"RESET" ", header);
     vfprintf(stdout, comment, args);
     printf("\n");
     va_end(args);

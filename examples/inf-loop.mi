@@ -1,0 +1,8 @@
+; This example implements an infinite loop in the X86_64 architecture. 
+; The EB instruction calculates the jmp based on the offset from the last byte of its own instruction, 
+; specifically the last byte FE. To jump to the nop with three bytes, we need to go back: 
+; two bytes for the jmp itself and one byte for executing the instruction that follows it.
+
+90 ; nop
+EB FD ; jmp -2
+RUN

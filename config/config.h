@@ -33,9 +33,10 @@
 #pragma once
 
 #define INTR_NAME       "Zelemi Interpreter"
-#define INTR_VERSION    "3.0"
+#define INTR_VERSION    "3.1"
 #define GET_VERSION     INTR_NAME " version " INTR_VERSION
 
-#define STARTUP_MESSAGE_HINT "Type \"HLP\" or \"LIC\" for more information.\n"
+#define STARTUP_MESSAGE_HINT \
+                        "Type \"HLP\" or \"LIC\" for more information.\n"
 
 #define PROMPT          PINK">> "RESET

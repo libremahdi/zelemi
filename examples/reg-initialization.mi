@@ -18,5 +18,5 @@ BF 06 00 00 00 ; mov rdi, 6
 
 C3 ; ret
 
-GETREG AMD64 ; get-reg function pointer
+ADR REG ; get-reg function pointer
 RUN

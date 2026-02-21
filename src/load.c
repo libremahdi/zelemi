@@ -41,7 +41,7 @@ static int isn_hexadecimal(const char *input) {
     return *endptr != '\0'; /* 0 for truly hex */
 }
 
-int str2hex_split(char *input, struct DATA_STRUCT *data_pack) {
+int zelemi_run_hex(char *input, struct DATA_STRUCT *data_pack) {
     unsigned int HEX_INT;
     char *token = strtok(input, " ");
     while (token) {

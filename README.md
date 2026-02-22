@@ -1,6 +1,6 @@
-# Zero Level Machine Interpreter
+# Zero Level Machine Interpreter-like
 
-This interpreter operates at a zero level; there are no abstractions, and everything you write is exactly what the processor sees and executes. This project serves as an educational example and is not recommended for professional use or serious development. However, theoretically, there are no limitations to what this interpreter can accomplish.
+This interpreter-like operates at a zero level; there are no abstractions, and everything you write is exactly what the processor sees and executes. This project serves as an educational example and is not recommended for professional use or serious development. However, theoretically, there are no limitations to what this interpreter can accomplish.
 
 There are a series of basic commands such as RUN, ADR, CLR, etc., which do not affect the machine code and serve as management commands for the interpreter. The machine codes are entered into the software in hexadecimal format and are executed once the RUN command is entered.
 

@@ -34,7 +34,7 @@
 #include "error_handle.h"
 
 int zelemi_command_hlp(int argc, char *opt, struct DATA_STRUCT *data_pack) {
-    if(opt) {zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, HLP_TAKEN_ANY_ARG_ERROR); return -3;}
+    if(opt) {zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, TAKEN_ANY_ARG_ERROR, "HLP"); return -3;}
     if(argc==1) {
         printf("\
 ADR [fnc]         : It returns the address of a specific internal function based on its parameter.\n\

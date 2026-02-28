@@ -44,9 +44,9 @@ int zelemi_command_lod(int argc, char *opt, struct DATA_STRUCT *data_pack) {
     FILE *load_fp=NULL;
     char input[256];
     char flag; /* a Byte for flag */
+    unsigned input_size;
 
-    if(!opt) 
-    {zelemi_printerr_sys(FILE_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "LOAD"); return -3;} 
+    if(!opt)  {zelemi_printerr_sys(FILE_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "LOAD"); return -3;} 
     
     load_fp=fopen(opt, "r");
     if(!load_fp) {zelemi_printerr_sys(FILE_ERROR_HEADER, FILE_ERROR, opt); return -3;}
@@ -62,9 +62,16 @@ int zelemi_command_lod(int argc, char *opt, struct DATA_STRUCT *data_pack) {
         trim_start(input); trim_end(input);
         if(input[0]=='\0') continue; /* ignore blank line */
 
-        if(ignore_commands(input)) { printf("; %s\n", input); flag=1; continue; } 
-        else printf(GREEN"%s\n"RESET, input);
+        input_size = strlen(input);
+        char *command = strtok(input, " ");
+    
+        if(ignore_commands(command)) { 
+            input[strcspn(input, "\0")]=' '; /* Remove NUL */
+            printf("; %s\n", input); flag=1; 
+            continue; 
+        } else printf(GREEN"%s\n"RESET, input);
 
+        input[strcspn(input, "\0")]=' '; /* Remove NUL */
         if(zelemi_run_hex(input, data_pack)) goto RET_3;
     }
     // if(flag) zelemi_printerr_sys("Hint", COMMAND_LOAD_HINT);

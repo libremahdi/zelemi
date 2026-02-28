@@ -76,7 +76,7 @@ int zelemi_run(int argc, char **argv) {
             goto RET_1;
         }
 
-        input[strcspn(input, "\n")]=0; /* Remove NUL */
+        input[strcspn(input, "\n")]=0; /* Remove NL */
         if(strstr(input, ";")) *strstr(input, ";")='\0'; /* replaces comment characters with \0 to ignore comments anywhere in the line. */
         trim_start(input); trim_end(input);
         if(input[0]=='\0') continue; /* ignore blank line */

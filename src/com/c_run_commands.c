@@ -33,13 +33,13 @@
 #include "c_struct.h"
 
 struct FunctionBuffer commands[] = {
-    {"RUN" , zelemi_command_run},
     {"LOAD", zelemi_command_lod},
     {"END" , zelemi_command_end},
     {"CLR" , zelemi_command_clr},
     {"ADR" , zelemi_command_adr},
     {"HLP" , zelemi_command_hlp},
     {"LIC" , zelemi_command_lic},
+    {"RUN" , zelemi_command_run},
     {NULL, NULL}
 };
 

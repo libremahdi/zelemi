@@ -44,9 +44,11 @@ struct FunctionBuffer {
 
 int c_run_commands(int, char *, char *, struct DATA_STRUCT *);
 
-int zelemi_command_run(int argc, char *opt, struct DATA_STRUCT *);
-int zelemi_command_clr(int argc, char *opt, struct DATA_STRUCT *);
-int zelemi_command_adr(int argc, char *opt, struct DATA_STRUCT *);
-int zelemi_command_hlp(int argc, char *opt, struct DATA_STRUCT *);
-int zelemi_command_lic(int argc, char *opt, struct DATA_STRUCT *);
-int zelemi_command_end(int argc, char *opt, struct DATA_STRUCT *);
+#define Z_PROTOTYPE(pf) int zelemi_command_##pf(int argc, char *opt, struct DATA_STRUCT *);
+Z_PROTOTYPE(run);
+Z_PROTOTYPE(clr);
+Z_PROTOTYPE(hlp);
+Z_PROTOTYPE(adr);
+Z_PROTOTYPE(lic);
+Z_PROTOTYPE(end);
+Z_PROTOTYPE(lod);

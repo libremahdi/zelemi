@@ -28,37 +28,48 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <stdlib.h> /* NULL */
-#include <string.h> /* strcmp */
+#include <stdio.h> /* fopen printf */
+#include <string.h> /* strcspn strstr*/
 #include "c_struct.h"
+#include "errors.h"
+#include "error_handle.h"
+#include "colors.h"
 
-struct FunctionBuffer commands[] = {
-    {"RUN" , zelemi_command_run},
-    {"LOAD", zelemi_command_lod},
-    {"END" , zelemi_command_end},
-    {"CLR" , zelemi_command_clr},
-    {"ADR" , zelemi_command_adr},
-    {"HLP" , zelemi_command_hlp},
-    {"LIC" , zelemi_command_lic},
-    {NULL, NULL}
-};
+int trim_start(char * const);
+int trim_end(char * const);
+int zelemi_run_hex(char *, struct DATA_STRUCT *);
+int ignore_commands(char *);
 
-int c_run_commands(int argc, char *com, char *opt, struct DATA_STRUCT *data_pack) {
-    register unsigned char in_1 = 0;
-    while(commands[in_1].CommandName) {
-        if(strcmp(com, commands[in_1].CommandName)==0)
-            return commands[in_1].fnc(argc, opt, data_pack);
-        ++in_1;
-    }
-    return -2;
-}
+int zelemi_command_lod(int argc, char *opt, struct DATA_STRUCT *data_pack) {
+    FILE *load_fp=NULL;
+    char input[256];
+    char flag; /* a Byte for flag */
 
-int ignore_commands(char *com) {
-    register unsigned char in_1 = 0;
+    if(!opt) 
+    {zelemi_printerr_sys(FILE_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "LOAD"); return -3;} 
     
-    while(commands[in_1].CommandName) {
-        if(strcmp(com, commands[in_1].CommandName)==0) return 1;
-        ++in_1;
+    load_fp=fopen(opt, "r");
+    if(!load_fp) {zelemi_printerr_sys(FILE_ERROR_HEADER, FILE_ERROR, opt); return -3;}
+
+    while(1) {
+        if((fgets(input, sizeof(input), load_fp)==NULL)&&(!feof(load_fp))) {
+            zelemi_printerr_sys(INPUT_ERROR_HEADER, INPUT_ERROR);
+            goto RET_3;
+        } else if (feof(load_fp)) break;
+        
+        if(strstr(input, ";")) *strstr(input, ";")='\0'; /* replaces comment characters with \0 to ignore comments anywhere in the line. */
+        input[strcspn(input, "\n")]=0; /* Remove NL */
+        trim_start(input); trim_end(input);
+        if(input[0]=='\0') continue; /* ignore blank line */
+
+        if(ignore_commands(input)) { printf("; %s\n", input); flag=1; continue; } 
+        else printf(GREEN"%s\n"RESET, input);
+
+        if(zelemi_run_hex(input, data_pack)) goto RET_3;
     }
-    return 0;
+    if(flag) zelemi_printerr_sys("Hint", COMMAND_LOAD_HINT);
+
+RET_3:
+    fclose(load_fp);
+    return -3;
 }

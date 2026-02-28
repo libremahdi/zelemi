@@ -9,3 +9,4 @@ b8 3c 00 00 00  ; mov rax, 60 ; sys_exit for syscall
 0f 05           ; syscall     ; sys_exit
 
 RUN             ; zelemi Command
+

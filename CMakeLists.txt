@@ -15,7 +15,7 @@ file(GLOB SOURCES
     src/com/hlp.c 
     src/com/lic.c 
     src/com/run.c
-    src/com/lod.c
+    src/com/ldf.c
     src/com/c_run_commands.c 
     src/com/adr-reg/reg_x86_64.c
 )

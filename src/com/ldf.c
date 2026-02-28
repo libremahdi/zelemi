@@ -43,7 +43,7 @@ int ignore_commands(char *);
 int zelemi_command_lod(int argc, char *opt, struct DATA_STRUCT *data_pack) {
     FILE *load_fp=NULL;
     char input[256];
-    char flag; /* a Byte for flag */
+    // char flag; /* a Byte for flag */
     unsigned input_size;
 
     if(!opt)  {zelemi_printerr_sys(FILE_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "LOAD"); return -3;} 
@@ -65,9 +65,9 @@ int zelemi_command_lod(int argc, char *opt, struct DATA_STRUCT *data_pack) {
         input_size = strlen(input);
         char *command = strtok(input, " ");
     
-        if(ignore_commands(command)) { 
+        if(ignore_commands(command)) {
             input[strcspn(input, "\0")]=' '; /* Remove NUL */
-            printf("; %s\n", input); flag=1; 
+            printf("; %s\n", input); // flag=1; 
             continue; 
         } else printf(GREEN"%s\n"RESET, input);
 

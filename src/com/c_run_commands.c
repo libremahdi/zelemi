@@ -33,7 +33,7 @@
 #include "c_struct.h"
 
 struct FunctionBuffer commands[] = {
-    {"LOAD", zelemi_command_lod},
+    {"LDF", zelemi_command_lod},
     {"END" , zelemi_command_end},
     {"CLR" , zelemi_command_clr},
     {"ADR" , zelemi_command_adr},

@@ -12,6 +12,7 @@ file(GLOB SOURCES
     src/com/adr.c 
     src/com/clr.c 
     src/com/c_run_commands.c 
+    src/com/adr-reg/reg_x86_64.c
     src/com/end.c 
     src/com/hlp.c 
     src/com/lic.c 

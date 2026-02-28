@@ -67,7 +67,7 @@ int zelemi_command_lod(int argc, char *opt, struct DATA_STRUCT *data_pack) {
 
         if(zelemi_run_hex(input, data_pack)) goto RET_3;
     }
-    if(flag) zelemi_printerr_sys("Hint", COMMAND_LOAD_HINT);
+    // if(flag) zelemi_printerr_sys("Hint", COMMAND_LOAD_HINT);
 
 RET_3:
     fclose(load_fp);

@@ -11,12 +11,13 @@ file(GLOB SOURCES
     src/zelemi.c 
     src/com/adr.c 
     src/com/clr.c 
-    src/com/c_run_commands.c 
-    src/com/adr-reg/reg_x86_64.c
     src/com/end.c 
     src/com/hlp.c 
     src/com/lic.c 
     src/com/run.c
+    src/com/lod.c
+    src/com/c_run_commands.c 
+    src/com/adr-reg/reg_x86_64.c
 )
 
 add_executable(zelemi ${SOURCES})

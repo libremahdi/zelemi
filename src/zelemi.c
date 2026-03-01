@@ -48,7 +48,7 @@ int zelemi_run(int argc, char **argv) {
     data_pack->code_size=0;
     data_pack->code_capa=0;
     data_pack->number_base=(char*)malloc(3); /* one for NUL */
-    strcpy(data_pack->number_base, "%X");
+    strcpy(data_pack->number_base, DEFAULT_NMB_ARG);
     
     char input[256]; /* User inputs is placed here. */
     unsigned input_size;

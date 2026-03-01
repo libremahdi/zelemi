@@ -42,3 +42,6 @@
 #define STARTUP_MESSAGE_HINT "Type \"HLP\" or \"LIC\" for more information.\n"
 
 #define PROMPT          PINK">> "RESET
+
+#define DEFAULT_NMB     "Hex" /* Hex */
+#define DEFAULT_NMB_ARG "%X" /* Hex */

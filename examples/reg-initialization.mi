@@ -16,7 +16,7 @@ BF 06 00 00 00 ; mov rdi, 6
 49 C7 C6 0F 00 00 00 ; mov r14, C
 49 C7 C7 10 00 00 00 ; mov r15, C
 
-C3 ; ret
+.C3 ; ret
 
 ADR REG ; get-reg function pointer
 RUN

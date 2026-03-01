@@ -35,6 +35,9 @@
 #include "errors.h"
 #include "error_handle.h"
 
+int trim_start(char * const);
+int trim_end(char * const);
+
 static int isn_hexadecimal(const char *input) {
     char *endptr;
     strtol(input, &endptr, 16);
@@ -45,6 +48,10 @@ int zelemi_run_hex(char *input, struct DATA_STRUCT *data_pack) {
     unsigned int HEX_INT;
     char *token = strtok(input, " ");
     while (token) {
+        if(token[0]=='.') {/* Remove a dot from First of token */
+            token[0]=' '; /* replace first dot with space */
+            trim_start(token); /* Remove All first Spaces */
+        }
         if(isn_hexadecimal(token)) goto RET_ERR;
         if (sscanf(token, "%X", &HEX_INT) == 1) {
             if(data_pack->code_capa<=data_pack->code_size) {

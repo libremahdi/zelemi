@@ -36,7 +36,7 @@
                   based on target architecture. */
 
 #define INTR_NAME       "Zelemi Interpreter"
-#define INTR_VERSION    "3.1"
+#define INTR_VERSION    "3.2"
 #define GET_VERSION     INTR_NAME " version " INTR_VERSION
 
 #define STARTUP_MESSAGE_HINT "Type \"HLP\" or \"LIC\" for more information.\n"

@@ -33,6 +33,7 @@
 
 struct DATA_STRUCT {
     unsigned char *code; /* opcodes Buffer in Memory */
+    char *number_base;
     size_t code_size; /* number of Buffer opcodes */
     size_t code_capa; /* number of Buffer opcodes */
 };
@@ -52,3 +53,4 @@ Z_PROTOTYPE(adr);
 Z_PROTOTYPE(lic);
 Z_PROTOTYPE(end);
 Z_PROTOTYPE(lod);
+Z_PROTOTYPE(nmb);

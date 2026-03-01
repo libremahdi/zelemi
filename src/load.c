@@ -53,7 +53,7 @@ int zelemi_run_hex(char *input, struct DATA_STRUCT *data_pack) {
             trim_start(token); /* Remove All first Spaces */
         }
         if(isn_hexadecimal(token)) goto RET_ERR;
-        if (sscanf(token, "%X", &HEX_INT) == 1) {
+        if (sscanf(token, data_pack->number_base, &HEX_INT) == 1) {
             if(data_pack->code_capa<=data_pack->code_size) {
                 data_pack->code = (unsigned char *) realloc(data_pack->code, sizeof(unsigned char) * (data_pack->code_capa+1));
                 if (!data_pack->code) { perror("realloc"); return 1; }

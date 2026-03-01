@@ -28,38 +28,18 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <stdlib.h> /* NULL */
-#include <string.h> /* strcmp */
+#include <stdlib.h>
+#include <string.h>
 #include "c_struct.h"
+#include "errors.h"
+#include "error_handle.h"
 
-struct FunctionBuffer commands[] = {
-    {"LDF", zelemi_command_lod},
-    {"END", zelemi_command_end},
-    {"CLR", zelemi_command_clr},
-    {"ADR", zelemi_command_adr},
-    {"HLP", zelemi_command_hlp},
-    {"LIC", zelemi_command_lic},
-    {"RUN", zelemi_command_run},
-    {"NMB", zelemi_command_nmb},
-    {NULL, NULL}
-};
-
-int c_run_commands(int argc, char *com, char *opt, struct DATA_STRUCT *data_pack) {
-    register unsigned char in_1 = 0;
-    while(commands[in_1].CommandName) {
-        if(strcmp(com, commands[in_1].CommandName)==0)
-            return commands[in_1].fnc(argc, opt, data_pack);
-        ++in_1;
-    }
-    return -2;
-}
-
-int ignore_commands(char *com) {
-    register unsigned char in_1 = 0;
-    
-    while(commands[in_1].CommandName) {
-        if(strcmp(com, commands[in_1].CommandName)==0) return 1;
-        ++in_1;
-    }
-    return 0;
+int zelemi_command_nmb(int argc, char *opt, struct DATA_STRUCT *data_pack) {
+    if(!opt)  {zelemi_printerr_sys(FILE_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "NMB"); return -3;} 
+    else if((strcmp(opt, "BIN")==0)||(strcmp(opt, "2")==0))  { strcpy(data_pack->number_base, "%b"); }
+    else if((strcmp(opt, "HEX")==0)||(strcmp(opt, "6")==0))  { strcpy(data_pack->number_base, "%d"); }
+    else if((strcmp(opt, "OCT")==0)||(strcmp(opt, "8")==0))  { strcpy(data_pack->number_base, "%o"); }
+    else if((strcmp(opt, "DEC")==0)||(strcmp(opt, "10")==0)) { strcpy(data_pack->number_base, "%X"); }
+    else {zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, ARGUMENT_ERROR, opt); return -3;} 
+    return 0; /* continue to loop */
 }

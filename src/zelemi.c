@@ -30,7 +30,7 @@
 
 #include <stdlib.h> /* malloc */
 #include <stdio.h> /* perror */
-#include <string.h> /* strchr, strcmp */
+#include <string.h> /* strchr strcmp strcpy */
 #include <sys/utsname.h> /* uname utsname */
 #include "config.h"
 #include "errors.h"
@@ -47,6 +47,8 @@ int zelemi_run(int argc, char **argv) {
     data_pack->code=NULL;
     data_pack->code_size=0;
     data_pack->code_capa=0;
+    data_pack->number_base=(char*)malloc(3); /* one for NUL */
+    strcpy(data_pack->number_base, "%X");
     
     char input[256]; /* User inputs is placed here. */
     unsigned input_size;
@@ -114,6 +116,7 @@ int zelemi_run(int argc, char **argv) {
   RET_0:
       if(current_fp) if(current_fp!=stdin) fclose(current_fp);
       if(data_pack->code) free(data_pack->code);
+      free(data_pack->number_base);
       if(data_pack) free(data_pack);
       return 0;
   RET_1:

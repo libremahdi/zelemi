@@ -51,6 +51,8 @@ CLR [parameter]   : It clears a specific buffer or page based on the parameter.\
                               However, the buffer capacity does not change.\n\
                     [BFRCAPA] : Like the parameter BFR, it also clears the \n\
                                 buffer capacity and frees the buffer in memory.\n\
+LDF [File Addr]:    Load Machine opcodes from File, while the Zelemi is in Console mode.\n\
+                    it can be used to save Call Point Machine Code (like func) in a file!\n\
 RUN -no argument- : It loads the machine code buffer into the executable space and then executes it.\n\
 ");
     }

@@ -36,9 +36,9 @@
 int zelemi_command_nmb(int argc, char *opt, struct DATA_STRUCT *data_pack) {
     if(!opt)  {zelemi_printerr_sys(FILE_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "NMB"); return -3;} 
     else if((strcmp(opt, "BIN")==0)||(strcmp(opt, "2")==0))  { strcpy(data_pack->number_base, "%b"); }
-    else if((strcmp(opt, "HEX")==0)||(strcmp(opt, "6")==0))  { strcpy(data_pack->number_base, "%d"); }
     else if((strcmp(opt, "OCT")==0)||(strcmp(opt, "8")==0))  { strcpy(data_pack->number_base, "%o"); }
     else if((strcmp(opt, "DEC")==0)||(strcmp(opt, "10")==0)) { strcpy(data_pack->number_base, "%X"); }
+    else if((strcmp(opt, "HEX")==0)||(strcmp(opt, "16")==0)) { strcpy(data_pack->number_base, "%d"); }
     else {zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, ARGUMENT_ERROR, opt); return -3;} 
     return 0; /* continue to loop */
 }

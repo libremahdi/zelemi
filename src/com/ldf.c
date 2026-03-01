@@ -37,7 +37,7 @@
 
 int trim_start(char * const);
 int trim_end(char * const);
-int zelemi_run_hex(char *, struct DATA_STRUCT *);
+int zelemi_send(char *, struct DATA_STRUCT *);
 int ignore_commands(char *);
 
 int zelemi_command_lod(int argc, char *opt, struct DATA_STRUCT *data_pack) {
@@ -73,7 +73,7 @@ int zelemi_command_lod(int argc, char *opt, struct DATA_STRUCT *data_pack) {
         } else printf(GREEN"%s\n"RESET, input);
 
         input[strcspn(input, "\0")]=' '; /* Remove NUL */
-        if(zelemi_run_hex(input, data_pack)) goto RET_3;
+        if(zelemi_send(input, data_pack)) goto RET_3;
     }
     // if(flag) zelemi_printerr_sys("Hint", COMMAND_LOAD_HINT);
 

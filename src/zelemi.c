@@ -39,7 +39,7 @@
 
 int trim_start(char * const);
 int trim_end(char * const);
-int zelemi_run_hex(char *, struct DATA_STRUCT *);
+int zelemi_send(char *, struct DATA_STRUCT *);
 
 int zelemi_run(int argc, char **argv) {
     struct DATA_STRUCT *data_pack=malloc(sizeof(struct DATA_STRUCT));
@@ -108,7 +108,7 @@ int zelemi_run(int argc, char **argv) {
           if(input[in_1]=='\0') input[in_1]=' ';
         }
 
-        if (zelemi_run_hex(input, data_pack)) {
+        if (zelemi_send(input, data_pack)) {
           if(argc==1) continue;
           goto RET_1;
         }

@@ -46,7 +46,7 @@ int zelemi_command_lod(int argc, char *opt, struct DATA_STRUCT *data_pack) {
     // char flag; /* a Byte for flag */
     unsigned input_size;
 
-    if(!opt)  {zelemi_printerr_sys(FILE_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "LOAD"); return -3;} 
+    if(!opt)  {zelemi_printerr_sys(FILE_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "LDF"); return -3;} 
     
     load_fp=fopen(opt, "r");
     if(!load_fp) {zelemi_printerr_sys(FILE_ERROR_HEADER, FILE_ERROR, opt); return -3;}

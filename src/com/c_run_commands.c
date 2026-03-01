@@ -33,14 +33,14 @@
 #include "c_struct.h"
 
 struct FunctionBuffer commands[] = {
-    {"LDF", zelemi_command_lod},
-    {"END", zelemi_command_end},
-    {"CLR", zelemi_command_clr},
-    {"ADR", zelemi_command_adr},
-    {"HLP", zelemi_command_hlp},
-    {"LIC", zelemi_command_lic},
-    {"RUN", zelemi_command_run},
-    {"NMB", zelemi_command_nmb},
+    {"LDF", zelemi_command_lod}, /* Load File while zelemi in console mode */
+    {"END", zelemi_command_end}, 
+    {"CLR", zelemi_command_clr}, /* Clear [e.g Page, Buffer] */
+    {"ADR", zelemi_command_adr}, /* Address of zelemi-special internal function */
+    {"HLP", zelemi_command_hlp}, /* show Help page */
+    {"LIC", zelemi_command_lic}, /* show License */
+    {"RUN", zelemi_command_run}, 
+    {"NMB", zelemi_command_nmb}, /* Change Number Base */
     {NULL, NULL}
 };
 

@@ -28,8 +28,7 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <stdlib.h>
-#include <string.h>
+#include <string.h> /* strcpy */
 #include "c_struct.h"
 #include "errors.h"
 #include "error_handle.h"

@@ -21,4 +21,9 @@ BF 06 00 00 00 ; mov rdi, 6
 .C3 ; ret
 
 ADR REG ; get-reg function pointer
+
+; For X86_64 :
+; B8 XX XX XX XX
+; FF D0 C3
+
 RUN

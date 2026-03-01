@@ -27,7 +27,6 @@
    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-
 #define USER_ERR_HEADER         "User Error"
 
 #define FILE_NAME_ERROR_HEADER  "FileNameError"
@@ -40,7 +39,7 @@
 #define FILE_ERROR              "Unable to open '%s'."
 #define INPUT_ERROR             "An error occurred in the input buffer."
 #define ARGUMENT_ERROR          "The argument '%s' is undefined."
-#define LOAD_HEX_INPUT_ERROR    "'%s' is undefined. Only hexadecimal numbers and basic commands are available."
+#define LOAD_BASE_INPUT_ERROR   "'%s' is undefined. \nLook at the current numbase or see 'HLP'"
 #define EMPTY_BUFFER_ERROR      "No opcode available for execution."
 #define RUN_TOO_MANY_ARGC_ERROR "zelemi-run takes only one argument, which is the path to the source code file."
 #define TAKES_ONE_ARG_ERROR     "The '%s' command takes one argument. see 'HLP'"

@@ -70,6 +70,6 @@ int zelemi_run_hex(char *input, struct DATA_STRUCT *data_pack) {
     return 0;
 
 RET_ERR:
-    zelemi_printerr_sys(INPUT_ERROR_HEADER, LOAD_HEX_INPUT_ERROR, token);
+    zelemi_printerr_sys(INPUT_ERROR_HEADER, LOAD_BASE_INPUT_ERROR, token);
     return 1;
 }

@@ -40,10 +40,12 @@ int zelemi_send(char *input, struct DATA_STRUCT *data_pack) {
     unsigned int HEX_INT;
     char *token = strtok(input, " ");
     while (token) {
-        if(token[0]=='.') {/* Remove a dot from First of token */
-            token[0]=' '; /* replace first dot with space */
-            trim_start(token); /* Remove All first Spaces */
-        }
+        /* Make the structure dirty!! ( Like MS-DOS )
+        */
+        // if(token[0]=='.') {/* Remove a dot from First of token */
+            // token[0]=' '; /* replace first dot with space */
+            // trim_start(token); /* Remove All first Spaces */
+        // }
         if (sscanf(token, data_pack->number_base, &HEX_INT) == 1) {
             if(data_pack->code_capa<=data_pack->code_size) {
                 data_pack->code = (unsigned char *) realloc(data_pack->code, sizeof(unsigned char) * (data_pack->code_capa+1));

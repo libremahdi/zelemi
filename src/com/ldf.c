@@ -61,7 +61,7 @@ int zelemi_command_lod(int argc, char *opt, struct DATA_STRUCT *data_pack) {
         input[strcspn(input, "\n")]=0; /* Remove NL */
         trim_start(input); trim_end(input);
         if(input[0]=='\0') continue; /* ignore blank line */
-        if(input[0]=='.') continue; /* ignore dot-commands */
+        // if(input[0]=='.') continue; /* ignore dot-commands */
 
         input_size = strlen(input);
         char *command = strtok(input, " ");

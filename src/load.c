@@ -36,6 +36,8 @@
 #include "zelemi_err.h"
 #include "zelemi_trim.h"
 
+static int zelemi_isn_hex(const char *);
+
 int zelemi_send(char *input, struct DATA_STRUCT *data_pack) {
     unsigned int HEX_INT;
     char *token = strtok(input, " ");
@@ -48,6 +50,8 @@ int zelemi_send(char *input, struct DATA_STRUCT *data_pack) {
             trim_start(token); /* Remove All first Spaces */
         }
         #endif
+
+        if (zelemi_isn_hex(token)) goto RET_ERR;
         if (sscanf(token, data_pack->number_base, &HEX_INT) == 1) {
             if(data_pack->code_capa<=data_pack->code_size) {
                 data_pack->code = (unsigned char *) realloc(data_pack->code, sizeof(unsigned char) * (data_pack->code_capa+1));
@@ -67,4 +71,10 @@ int zelemi_send(char *input, struct DATA_STRUCT *data_pack) {
 RET_ERR:
     zelemi_printerr_sys(INPUT_ERROR_HEADER, LOAD_BASE_INPUT_ERROR, token);
     return 1;
+}
+
+static int zelemi_isn_hex(const char *input) {
+    char *endptr;
+    strtol(input, &endptr, 16);
+    return *endptr != '\0'; /* 0 for truly hex */
 }

@@ -34,6 +34,7 @@
 struct DATA_STRUCT {
     unsigned char *code; /* opcodes Buffer in Memory */
     char *number_base;
+    unsigned int i_number_base;
     size_t code_size; /* number of Buffer opcodes */
     size_t code_capa; /* number of Buffer opcodes */
 };

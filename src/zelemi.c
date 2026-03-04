@@ -47,8 +47,21 @@ int zelemi_run(int argc, char **argv) {
     data_pack->code_size=0;
     data_pack->code_capa=0;
     data_pack->number_base=(char*)malloc(3); /* one for NUL */
-    strcpy(data_pack->number_base, DEFAULT_NMB_ARG);
     
+    #if DEFAULT_NMB_ARG_I==2
+        data_pack->i_number_base=2;
+        strcpy(data_pack->number_base, "%b");
+    #elif DEFAULT_NMB_ARG_I==8
+        data_pack->i_number_base=8;
+        strcpy(data_pack->number_base, "%o");
+    #elif DEFAULT_NMB_ARG_I==10
+        data_pack->i_number_base=10;
+        strcpy(data_pack->number_base, "%d");
+    #elif DEFAULT_NMB_ARG_I==16
+        data_pack->i_number_base=16;
+        strcpy(data_pack->number_base, "%X");
+    #endif
+
     char input[256]; /* User inputs is placed here. */
     unsigned input_size;
     FILE *current_fp=NULL; /* file-ptr or stdin */

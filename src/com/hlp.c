@@ -31,7 +31,7 @@
 #include <stdio.h> /* printf */
 #include "c_struct.h"
 #include "errors.h"
-#include "error_handle.h"
+#include "zelemi_err.h"
 #include "config.h"
 
 int zelemi_command_hlp(int argc, char *opt, struct DATA_STRUCT *data_pack) {

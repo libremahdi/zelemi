@@ -4,7 +4,7 @@ project(Zelemi)
 include_directories(src/libs src/com config)
 
 file(GLOB SOURCES 
-    src/libs/error_handle.c 
+    src/err.c 
     src/load.c 
     src/main.c 
     src/trim.c 

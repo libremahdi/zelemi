@@ -35,10 +35,9 @@
 #include "config.h"
 #include "errors.h"
 #include "c_struct.h"
-#include "error_handle.h"
+#include "zelemi_err.h"
+#include "zelemi_trim.h"
 
-int trim_start(char * const);
-int trim_end(char * const);
 int zelemi_send(char *, struct DATA_STRUCT *);
 
 int zelemi_run(int argc, char **argv) {

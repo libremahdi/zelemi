@@ -32,7 +32,7 @@
 #include <string.h> /* strcspn strstr*/
 #include "c_struct.h"
 #include "errors.h"
-#include "error_handle.h"
+#include "zelemi_err.h"
 #include "colors.h"
 
 int trim_start(char * const);

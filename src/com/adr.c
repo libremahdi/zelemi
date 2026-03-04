@@ -33,7 +33,7 @@
 #include "c_struct.h"
 #include "c_struct.h"
 #include "errors.h"
-#include "error_handle.h"
+#include "zelemi_err.h"
 #include "config.h"
 
 void reg_x86_64();

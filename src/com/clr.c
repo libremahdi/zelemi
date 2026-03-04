@@ -32,7 +32,7 @@
 #include <string.h>
 #include "c_struct.h"
 #include "errors.h"
-#include "error_handle.h"
+#include "zelemi_err.h"
 
 int zelemi_command_clr(int argc, char *opt, struct DATA_STRUCT *data_pack) {
     if(!opt) system("clear");

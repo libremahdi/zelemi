@@ -36,7 +36,7 @@
 #include "c_struct.h"
 #include "errors.h"
 #include "colors.h"
-#include "error_handle.h"
+#include "zelemi_err.h"
 
 int zelemi_command_run(int argc, char *com, struct DATA_STRUCT *data_pack) {
     void *mem_opcode=NULL; /* Location of the opcodes that will be executed. */

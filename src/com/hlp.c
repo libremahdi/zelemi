@@ -55,10 +55,10 @@ CLR [parameter]   : It clears a specific buffer or page based on the parameter.\
                     -no-parameter- : Clear the Terminal Screen with Call system-function\n\
 LDF [File Addr]:    Load Machine opcodes from File, while the Zelemi is in Console mode.\n\
                     it can be used to save Call Point Machine Code (like func) in a file!\n\
-NMB [Number Base]:  Changes the base of the input number.. default is %s\n\
+NMB [Number Base]:  Changes the base of the input number.. default is %d\n\
                     [2][BIN] [10][DEC] [8][OCT] [16][HEX]\n\
 RUN -no argument- : It loads the machine code buffer into the executable space and then executes it.\n\
-", DEFAULT_NMB);
+", DEFAULT_NMB_ARG_I);
     }
     return 0;
 }

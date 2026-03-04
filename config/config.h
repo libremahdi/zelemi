@@ -33,15 +33,14 @@
 #pragma once
 
 #define X86_64 /* Manages/displays registers and low-level instructions \
-                  based on target architecture. */
+                  based on AMD64 architecture. */
 
 #define INTR_NAME       "Zelemi Interpreter"
-#define INTR_VERSION    "3.2"
+#define INTR_VERSION    "3.3"
 #define GET_VERSION     INTR_NAME " version " INTR_VERSION
 
 #define STARTUP_MESSAGE_HINT "Type \"HLP\" or \"LIC\" for more information.\n"
 
 #define PROMPT          PINK">> "RESET
 
-#define DEFAULT_NMB     "Hex" /* Hex */
-#define DEFAULT_NMB_ARG "%X" /* Hex */
+#define DEFAULT_NMB_ARG_I 16 /* Only Supports: 2, 8, 10, 16 */

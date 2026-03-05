@@ -34,7 +34,8 @@
 #include "zelemi_err.h"
 
 int zelemi_command_nmb(int argc, char *opt, struct DATA_STRUCT *data_pack) {
-    if(!opt)  {zelemi_printerr_sys(FILE_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "NMB"); return -3;} 
+    #include<stdio.h> /* printf */
+    if(!opt)  {printf("number base: %d\n", data_pack->i_number_base); return 0;} 
     else if((strcmp(opt, "BIN")==0)||(strcmp(opt, "2")==0))  { strcpy(data_pack->number_base, "%b"); data_pack->i_number_base=2; }
     else if((strcmp(opt, "OCT")==0)||(strcmp(opt, "8")==0))  { strcpy(data_pack->number_base, "%o"); data_pack->i_number_base=8; }
     else if((strcmp(opt, "DEC")==0)||(strcmp(opt, "10")==0)) { strcpy(data_pack->number_base, "%d"); data_pack->i_number_base=10; }

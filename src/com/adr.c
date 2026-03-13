@@ -36,9 +36,9 @@
 #include "zelemi_err.h"
 #include "config.h"
 
-void reg_x86_64();
-
+#undef REG_CALL
 #if defined(X86_64)
+  void reg_x86_64();
   #define REG_CALL reg_x86_64
 #endif
 

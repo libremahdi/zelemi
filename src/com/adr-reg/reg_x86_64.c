@@ -1,7 +1,7 @@
 #include <stdio.h> /* printf */
+#include "config.h"
 
-#define MOVREG(register) __asm__("mov %"#register", %0" : "=r" (register))
-
+#if defined(X86_64)
 void reg_x86_64() {
     unsigned long long registers[16];
     const char *regs_x86_64[16] = {
@@ -40,3 +40,4 @@ void reg_x86_64() {
     printf("   RBP=%llx\n", registers[15]);
     return;
 }
+#endif

@@ -30,9 +30,9 @@
 
 #include <stdio.h> /* printf */
 #include <signal.h> /* signal */
-#include <pgetopt-4.3/pgetopt.h>
 #include "zelemi_err.h"
 #include "config.h"
+#include "header.h"
 
 int zelemi_run(int, char **);
 

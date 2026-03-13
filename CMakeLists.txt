@@ -25,6 +25,7 @@ add_executable(zelemi ${SOURCES})
 
 link_directories(/usr/local/lib)
 target_link_libraries(zelemi pgetopt)
+target_link_libraries(zelemi pstring)
 set_target_properties(zelemi PROPERTIES
     INSTALL_RPATH /usr/local/lib
 )

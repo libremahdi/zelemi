@@ -34,9 +34,9 @@
 
 #define X86_64 /* Manages/displays registers and low-level instructions \
                   based on AMD64 architecture. */
-
-#define INTR_NAME       "Zelemi Interpreter"
-#define INTR_VERSION    "3.3"
+                  
+#define INTR_NAME       "Zelemi Interpreter-like"
+#define INTR_VERSION    "4.0"
 #define GET_VERSION     INTR_NAME " version " INTR_VERSION
 
 #define STARTUP_MESSAGE_HINT "Type \"HLP\" or \"LIC\" for more information.\n"

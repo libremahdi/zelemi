@@ -44,7 +44,7 @@ int zelemi_printret(char *hint, ...) {
     return 0;
 }
 
-int zelemi_command_hlp(int argc, char *opt, struct DATA_STRUCT *data_pack) {
+int zelemi_command_hlp(int argc, const char *opt, struct DATA_STRUCT *data_pack) {
     char flag=1; /* A byte for A Flag */
 
       if((!opt)||(strcmp(opt, "ADR")==0)) flag=zelemi_printret("\

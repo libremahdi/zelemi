@@ -34,7 +34,7 @@
 #include "errors.h"
 #include "zelemi_err.h"
 
-int zelemi_command_clr(int argc, char *opt, struct DATA_STRUCT *data_pack) {
+int zelemi_command_clr(int argc, const char *opt, struct DATA_STRUCT *data_pack) {
     if(!opt) system("clear");
     else if(strcmp(opt, "BFR")==0) { data_pack->code_size=0; return 0; /* continue to loop */ }
     else if(strcmp(opt, "BFRCAPA")==0) {

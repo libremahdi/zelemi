@@ -33,7 +33,7 @@
 #include "errors.h"
 #include "zelemi_err.h"
 
-int zelemi_command_nmb(int argc, char *opt, struct DATA_STRUCT *data_pack) {
+int zelemi_command_nmb(int argc, const char *opt, struct DATA_STRUCT *data_pack) {
     #include<stdio.h> /* printf */
     if(!opt)  {printf("number base: %d\n", data_pack->i_number_base); return 0;} 
     else if((strcmp(opt, "BIN")==0)||(strcmp(opt, "2")==0))  { strcpy(data_pack->number_base, "%b"); data_pack->i_number_base=2; }

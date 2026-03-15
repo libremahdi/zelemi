@@ -38,7 +38,7 @@
 #include "colors.h"
 #include "zelemi_err.h"
 
-int zelemi_command_run(int argc, char *com, struct DATA_STRUCT *data_pack) {
+int zelemi_command_run(int argc, const char *com, struct DATA_STRUCT *data_pack) {
     void *mem_opcode=NULL; /* Location of the opcodes that will be executed. */
     void (*fn)(void)=NULL; /* The opcodes will be executed in the form of a function. */
     int fork_pid=-1, status;

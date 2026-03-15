@@ -29,6 +29,7 @@
 */
 
 #include <stdlib.h> /* size_t */
+#include "header.h"
 #pragma once
 
 struct DATA_STRUCT {
@@ -41,12 +42,12 @@ struct DATA_STRUCT {
 
 struct FunctionBuffer {
     char *CommandName;
-    int (*fnc)(int argc, char *opt, struct DATA_STRUCT *);
+    int (*fnc)(int argc, const char *opt, struct DATA_STRUCT *);
 };
 
-int c_run_commands(int, char *, char *, struct DATA_STRUCT *);
+int c_run_commands(int, string *, string *, struct DATA_STRUCT *);
 
-#define Z_PROTOTYPE(pf) int zelemi_command_##pf(int argc, char *opt, struct DATA_STRUCT *);
+#define Z_PROTOTYPE(pf) int zelemi_command_##pf(int argc, const char *opt, struct DATA_STRUCT *);
 Z_PROTOTYPE(run);
 Z_PROTOTYPE(clr);
 Z_PROTOTYPE(hlp);

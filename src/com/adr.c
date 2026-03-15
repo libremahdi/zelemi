@@ -42,7 +42,7 @@
   #define REG_CALL reg_x86_64
 #endif
 
-int zelemi_command_adr(int argc, char *opt, struct DATA_STRUCT *data_pack) {
+int zelemi_command_adr(int argc, const char *opt, struct DATA_STRUCT *data_pack) {
     if(!opt) {zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "ADR"); return -3;}
     
     if(strcmp(opt, "REG")==0)

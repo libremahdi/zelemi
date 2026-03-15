@@ -40,7 +40,7 @@ int trim_end(char * const);
 int zelemi_send(char *, struct DATA_STRUCT *);
 int ignore_commands(char *);
 
-int zelemi_command_lod(int argc, char *opt, struct DATA_STRUCT *data_pack) {
+int zelemi_command_lod(int argc, const char *opt, struct DATA_STRUCT *data_pack) {
     FILE *load_fp=NULL;
     char input[256];
     // char flag; /* a Byte for flag */

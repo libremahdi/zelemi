@@ -40,6 +40,8 @@
 
 #include "header.h"
 
+#define BUFFER_SIZE 256
+
 int zelemi_send(char *, struct DATA_STRUCT *);
 
 int zelemi_run(int argc, char **argv) {
@@ -64,8 +66,7 @@ int zelemi_run(int argc, char **argv) {
         strcpy(data_pack->number_base, "%X");
     #endif
 
-    char input[256]; /* User inputs is placed here. */
-    unsigned input_size;
+    char input[BUFFER_SIZE]; /* User inputs is placed here. */
     FILE *current_fp=NULL; /* file-ptr or stdin */
 
     if(argc==1) { /* It runs in console mode and takes input from the user. */
@@ -86,22 +87,21 @@ int zelemi_run(int argc, char **argv) {
     for(;;) {
         if(argc==1) printf(PROMPT);
 
-        if((fgets(input, sizeof(input), current_fp)==NULL)&&(!feof(current_fp))) {
+        if((fgets(input, BUFFER_SIZE, current_fp)==NULL)&&(!feof(current_fp))) {
             zelemi_printerr_sys(INPUT_ERROR_HEADER, INPUT_ERROR);
             if (argc==1) continue;
             goto RET_1;
         }
 
-        input[strcspn(input, "\n")]=0; /* Remove NL */
-        if(strstr(input, ";")) *strstr(input, ";")='\0'; /* replaces comment characters with \0 to ignore comments anywhere in the line. */
+        string *p_input = pstr_add(input, BUFFER_SIZE);
+        pstr_trim(p_input);
+        pstr_rnch(p_input, 0, ' '); /* Remove NL */
+        pstr_nch(p_input, pstr_contains(p_input, ";"), '\0');
         
-        trim_start(input); trim_end(input);
-        
-        if(input[0]=='\0') continue; /* ignore blank line */
+        if(pstr_at(p_input, 0)=='\0') continue; /* ignore blank line */
 
-        input_size = strlen(input);
-        char *command = strtok(input, " ");
-        char *option_ = strtok(NULL , " ");
+        string *command = pstr_isplit(p_input, 1);
+        string *option_ = pstr_isplit(p_input, 2);
         switch(c_run_commands(argc, command, option_, data_pack)) { 
           /* 0: continue the loop
              1: exit with error
@@ -115,12 +115,6 @@ int zelemi_run(int argc, char **argv) {
           case -3: 
               if(argc==1) continue; 
               else goto RET_1;
-        }
-        /* It nullifies the effect of strtok. If option_ is NULL, 
-           it means the command is a single part, and strtok has made no changes to the command.
-        */
-        for(register unsigned int in_1=0 ; in_1<input_size-1 ; ++in_1) {
-          if(input[in_1]=='\0') input[in_1]=' ';
         }
 
         if (zelemi_send(input, data_pack)) {

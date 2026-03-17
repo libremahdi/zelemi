@@ -42,7 +42,7 @@
 
 #define BUFFER_SIZE 256
 
-int zelemi_send(char *, struct DATA_STRUCT *);
+int zelemi_send(const string *, struct DATA_STRUCT *);
 
 int zelemi_run(int argc, char **argv) {
     struct DATA_STRUCT *data_pack=malloc(sizeof(struct DATA_STRUCT));
@@ -50,7 +50,7 @@ int zelemi_run(int argc, char **argv) {
     data_pack->code=NULL;
     data_pack->code_size=0;
     data_pack->code_capa=0;
-    data_pack->number_base=(char*)malloc(3); /* one for NUL */
+    data_pack->number_base=(char*)malloc(1); /* one for NUL */
     
     #if DEFAULT_NMB_ARG_I==2
         data_pack->i_number_base=2;
@@ -66,7 +66,7 @@ int zelemi_run(int argc, char **argv) {
         strcpy(data_pack->number_base, "%X");
     #endif
 
-    char input[BUFFER_SIZE]; /* User inputs is placed here. */
+    string *p_input = pstr_with_cap(BUFFER_SIZE); /* for pstr_gets_set */
     FILE *current_fp=NULL; /* file-ptr or stdin */
 
     if(argc==1) { /* It runs in console mode and takes input from the user. */
@@ -87,21 +87,22 @@ int zelemi_run(int argc, char **argv) {
     for(;;) {
         if(argc==1) printf(PROMPT);
 
-        if((fgets(input, BUFFER_SIZE, current_fp)==NULL)&&(!feof(current_fp))) {
+        if((pstr_gets_set(p_input, current_fp))&&(feof(current_fp)!=0)) {
             zelemi_printerr_sys(INPUT_ERROR_HEADER, INPUT_ERROR);
             if (argc==1) continue;
             goto RET_1;
         }
-
-        string *p_input = pstr_add(input, BUFFER_SIZE);
+        {
+            int i=pstr_contains(p_input, ";");
+            if(i==0) continue;
+            pstr_sept(p_input, 0, i);
+        }
         pstr_trim(p_input);
-        pstr_rnch(p_input, 0, ' '); /* Remove NL */
-        pstr_nch(p_input, pstr_contains(p_input, ";"), '\0');
-        
-        if(pstr_at(p_input, 0)=='\0') continue; /* ignore blank line */
+        if(pstr_len(p_input)==0) continue;
 
         string *command = pstr_isplit(p_input, 1);
         string *option_ = pstr_isplit(p_input, 2);
+
         switch(c_run_commands(argc, command, option_, data_pack)) { 
           /* 0: continue the loop
              1: exit with error
@@ -116,21 +117,25 @@ int zelemi_run(int argc, char **argv) {
               if(argc==1) continue; 
               else goto RET_1;
         }
-
-        if (zelemi_send(input, data_pack)) {
+        if (zelemi_send(p_input, data_pack)) {
           if(argc==1) continue;
           goto RET_1;
         }
+        pstr_free(command);
+        if(option_!=NULL) pstr_free(option_);
     }
-  RET_0:
-      if(current_fp) if(current_fp!=stdin) fclose(current_fp);
-      if(data_pack->code) free(data_pack->code);
-      free(data_pack->number_base);
-      if(data_pack) free(data_pack);
-      return 0;
-  RET_1:
-      if(current_fp) if(current_fp!=stdin) fclose(current_fp);
-      if(data_pack->code) free(data_pack->code);
-      if(data_pack) free(data_pack);
-      return 1;
+RET_0:
+    if(current_fp) if(current_fp!=stdin) fclose(current_fp);
+    if(data_pack->code) free(data_pack->code);
+    free(data_pack->number_base);
+    if(data_pack) free(data_pack);
+    pstr_free(p_input);
+    return 0;
+RET_1:
+    if(current_fp) if(current_fp!=stdin) fclose(current_fp);
+    if(data_pack->code) free(data_pack->code);
+    free(data_pack->number_base);
+    if(data_pack) free(data_pack);
+    pstr_free(p_input);
+    return 1;
 }

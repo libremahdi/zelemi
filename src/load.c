@@ -36,23 +36,22 @@
 #include "zelemi_err.h"
 #include "zelemi_trim.h"
 
-static int zelemi_isn_hex(const char *);
+static int zelemi_isn_hex(const string *, unsigned);
 
-int zelemi_send(char *input, struct DATA_STRUCT *data_pack) {
-    unsigned int HEX_INT;
-    char *token = strtok(input, " ");
-    while (token) {
-        /* Make the structure dirty!! ( Like MS-DOS )
-        */
-        #ifdef POINT_SUPPORT
-        if(token[0]=='.') {/* Remove a dot from First of token */
-            token[0]=' '; /* replace first dot with space */
-            trim_start(token); /* Remove All first Spaces */
+int zelemi_send(const string const *p_input, struct DATA_STRUCT *data_pack) {
+    unsigned int HEX_INT, i=1;
+    
+    string *token = pstr_isplit(p_input, i);
+    while (token!=NULL) {
+        #ifdef POINT_SUPPORT /* Makes the structure dirty!! ( Like MS-DOS ) */
+        if(pstr_at(token, 0)=='.') { /* Remove all dots from First of token */
+            pstr_replace(token, '.', ' ');
+            pstr_trim(token);
         }
         #endif
 
-        if (zelemi_isn_hex(token)) goto RET_ERR;
-        if (sscanf(token, data_pack->number_base, &HEX_INT) == 1) {
+        if (zelemi_isn_hex(token, data_pack->i_number_base)) goto RET_ERR;
+        if (sscanf(pstr_peek(token), data_pack->number_base, &HEX_INT) != EOF) {
             if(data_pack->code_capa<=data_pack->code_size) {
                 data_pack->code = (unsigned char *) realloc(data_pack->code, sizeof(unsigned char) * (data_pack->code_capa+1));
                 if (!data_pack->code) { perror("realloc"); return 1; }
@@ -63,18 +62,18 @@ int zelemi_send(char *input, struct DATA_STRUCT *data_pack) {
         } else {
             goto RET_ERR;
         }
-        token = strtok(NULL, " ");
-        if(!token) break;
+        pstr_free(token);
+        token = pstr_isplit(p_input, ++i);
     }
-    return 0;
+     return 0;
 
 RET_ERR:
     zelemi_printerr_sys(INPUT_ERROR_HEADER, LOAD_BASE_INPUT_ERROR, token);
     return 1;
 }
 
-static int zelemi_isn_hex(const char *input) {
+static int zelemi_isn_hex(const string const *input, unsigned i_number_base) {
     char *endptr;
-    strtol(input, &endptr, 16);
+    strtol(pstr_peek(input), &endptr, i_number_base);
     return *endptr != '\0'; /* 0 for truly hex */
 }

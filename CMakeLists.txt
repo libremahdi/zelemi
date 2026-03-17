@@ -19,6 +19,7 @@ file(GLOB SOURCES
     src/com/ldf.c
     src/com/c_run_commands.c 
     src/com/adr-reg/reg_x86_64.c
+    
 )
 
 add_executable(zelemi ${SOURCES})

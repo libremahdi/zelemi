@@ -45,7 +45,7 @@ struct FunctionBuffer {
     int (*fnc)(int argc, const char *opt, struct DATA_STRUCT *);
 };
 
-int c_run_commands(int, string *, string *, struct DATA_STRUCT *);
+int c_run_commands(int, const string *, const string *, struct DATA_STRUCT *);
 
 #define Z_PROTOTYPE(pf) int zelemi_command_##pf(int argc, const char *opt, struct DATA_STRUCT *);
 Z_PROTOTYPE(run);

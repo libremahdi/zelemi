@@ -34,56 +34,62 @@
 #include "errors.h"
 #include "zelemi_err.h"
 #include "colors.h"
+#include "config.h"
 
-int trim_start(char * const);
-int trim_end(char * const);
-int zelemi_send(char *, struct DATA_STRUCT *);
+int zelemi_send(const string *, struct DATA_STRUCT *);
 int ignore_commands(char *);
 
-int zelemi_command_lod(int argc, const char *opt, struct DATA_STRUCT *data_pack) {
-    FILE *load_fp=NULL;
-    char input[256];
-    // char flag; /* a Byte for flag */
-    unsigned input_size;
+#define BUFFER_SIZE 256
 
+int zelemi_command_lod(int argc, const char *opt, struct DATA_STRUCT *data_pack) {
     if(!opt)  {zelemi_printerr_sys(FILE_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "LDF"); return -3;} 
-    
-    load_fp=fopen(opt, "r");
+
+    FILE *load_fp=fopen(opt, "r");
     if(!load_fp) {zelemi_printerr_sys(FILE_ERROR_HEADER, FILE_ERROR, opt); return -3;}
 
-    while(1) {
-        if((fgets(input, sizeof(input), load_fp)==NULL)&&(!feof(load_fp))) {
+    string *p_input = pstr_with_cap(BUFFER_SIZE); /* for pstr_gets_set */
+
+    for(;;) {
+        if (pstr_gets_set(p_input, load_fp)) {
+            if (feof(load_fp)!=0) break;
             zelemi_printerr_sys(INPUT_ERROR_HEADER, INPUT_ERROR);
             goto RET_3;
-        } else if (feof(load_fp)) break;
-        
-        if(strstr(input, ";")) *strstr(input, ";")='\0'; /* replaces comment characters with \0 to ignore comments anywhere in the line. */
-        input[strcspn(input, "\n")]=0; /* Remove NL */
-        trim_start(input); trim_end(input);
-        if(input[0]=='\0') continue; /* ignore blank line */
-        
+        }
+        {
+            int i=pstr_contains(p_input, ";");
+            if(i==0) continue;
+            pstr_sept(p_input, 0, i);
+        }
+        pstr_trim(p_input);
+        if(pstr_len(p_input)==0) continue;
+
         #ifdef POINT_SUPPORT
-        if(input[0]=='.') continue; /* ignore dot-commands */
+        if(pstr_at(p_input, 0)=='.') {
+            printf("%s\n", pstr_peek(p_input));
+            continue;
+        }
         #endif
 
-        input_size = strlen(input);
-        char *command = strtok(input, " ");
-    
-        if(ignore_commands(command)) {
-            input[strcspn(input, "\0")]=' '; /* Remove NUL */
-            printf("; %s\n", input); // flag=1; 
-            continue; 
+        /**************************/
+        {
+            string *command = pstr_isplit(p_input, 1);
+            if(ignore_commands((char *)pstr_peek(command))) {
+                printf(GREEN"; %s\n"RESET, pstr_peek(p_input));
+                continue; 
+            }
+            pstr_free(command);
         }
 
-        input[strcspn(input, "\0")]=' '; /* Remove NUL */
-        printf(GREEN"%s\n"RESET, input);
+        /**************************/
 
-        if(zelemi_send(input, data_pack)) goto RET_3;
+        printf("%s\n", pstr_peek(p_input));
+        if (zelemi_send(p_input, data_pack)) goto RET_3;
     }
-
-    // if(flag) zelemi_printerr_sys("Hint", COMMAND_LOAD_HINT);
-
+    fclose(load_fp);
+    pstr_free(p_input);
+    return 0;
 RET_3:
+    pstr_free(p_input);
     fclose(load_fp);
     return -3;
 }

@@ -36,7 +36,6 @@
 #include "errors.h"
 #include "c_struct.h"
 #include "zelemi_err.h"
-#include "zelemi_trim.h"
 
 #include "header.h"
 

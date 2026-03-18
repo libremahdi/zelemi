@@ -7,7 +7,6 @@ file(GLOB SOURCES
     src/err.c 
     src/load.c 
     src/main.c 
-    src/trim.c 
     src/zelemi.c 
     src/com/adr.c 
     src/com/clr.c 

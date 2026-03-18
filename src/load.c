@@ -34,6 +34,8 @@
 #include "c_struct.h"
 #include "errors.h"
 #include "zelemi_err.h"
+#include "config.h"
+#include "header.h"
 
 static int zelemi_isn_hex(const string *, unsigned);
 
@@ -44,8 +46,7 @@ int zelemi_send(const string const *p_input, struct DATA_STRUCT *data_pack) {
     while (token!=NULL) {
         #ifdef POINT_SUPPORT /* Makes the structure dirty!! ( Like MS-DOS ) */
         if(pstr_at(token, 0)=='.') { /* Remove all dots from First of token */
-            pstr_replace(token, '.', ' ');
-            pstr_trim(token);
+            pstr_trim_ch(token, '.');
         }
         #endif
 

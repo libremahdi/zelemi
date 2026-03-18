@@ -34,7 +34,8 @@
 
 #define X86_64 /* Manages/displays registers and low-level instructions \
                   based on AMD64 architecture. */
-                  
+#define POINT_SUPPORT
+
 #define INTR_NAME       "Zelemi Interpreter-like"
 #define INTR_VERSION    "4.0"
 #define GET_VERSION     INTR_NAME " version " INTR_VERSION
@@ -44,3 +45,4 @@
 #define PROMPT          PINK">> "RESET
 
 #define DEFAULT_NMB_ARG_I 16 /* Only Supports: 2, 8, 10, 16 */
+

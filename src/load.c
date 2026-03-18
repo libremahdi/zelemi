@@ -34,7 +34,6 @@
 #include "c_struct.h"
 #include "errors.h"
 #include "zelemi_err.h"
-#include "zelemi_trim.h"
 
 static int zelemi_isn_hex(const string *, unsigned);
 
@@ -68,7 +67,7 @@ int zelemi_send(const string const *p_input, struct DATA_STRUCT *data_pack) {
      return 0;
 
 RET_ERR:
-    zelemi_printerr_sys(INPUT_ERROR_HEADER, LOAD_BASE_INPUT_ERROR, token);
+    zelemi_printerr_sys(INPUT_ERROR_HEADER, LOAD_BASE_INPUT_ERROR, pstr_peek(token));
     return 1;
 }
 

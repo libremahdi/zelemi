@@ -71,7 +71,7 @@ int zelemi_run(int argc, char **argv) {
     if(argc==1) { /* It runs in console mode and takes input from the user. */
         struct utsname os_info;
         if(uname(&os_info)) { perror("uname"); goto RET_1; }
-        printf("%s %s (main, %s %s) [%s (%s) for %s]\n", INTR_NAME, INTR_VERSION, __DATE__, __TIME__, os_info.nodename, os_info.sysname, os_info.machine);
+        printf("%s %s (main, %s %s) [%s for %s]\n", INTR_NAME, INTR_VERSION, __DATE__, __TIME__, os_info.sysname, os_info.machine);
         printf(STARTUP_MESSAGE_HINT);
         current_fp=stdin;
     } else if(argc==2) { /* It runs in file mode and reads data from a file. */

@@ -36,7 +36,7 @@
 #include "zelemi_err.h"
 #include "config.h"
 
-int zelemi_printret(char *hint, ...) {
+static int zelemi_printret(char *hint, ...) {
     va_list args;
     va_start(args, hint);
     vfprintf(stdout, hint, args);
@@ -75,7 +75,10 @@ NMB [Number Base]:  Changes the base of the input number.. default is %d\n\
                     [2][BIN] [10][DEC] [8][OCT] [16][HEX]\n", DEFAULT_NMB_ARG_I);
         if((!opt)||(strcmp(opt, "RUN")==0)) flag=zelemi_printret("\
 RUN -no argument- : It loads the machine code buffer into the executable space and then executes it.\n");
-        
+        if((!opt)||(strcmp(opt, "CHK")==0)) flag=zelemi_printret("\
+CHK [architecture] : Compares the architecture of your computer with the argument.\n\
+                     if there is a discrepancy, it build an error and stopes in script mode.\n\
+                     [X86_64][X64][AMD64] [POWERPC]\n");
         if(flag) {
             zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, ARGUMENT_ERROR, opt);
             return -3;

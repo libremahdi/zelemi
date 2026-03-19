@@ -13,6 +13,7 @@ file(GLOB SOURCES
     src/com/end.c 
     src/com/hlp.c 
     src/com/lic.c 
+    src/com/chk.c 
     src/com/run.c
     src/com/nmb.c
     src/com/ldf.c

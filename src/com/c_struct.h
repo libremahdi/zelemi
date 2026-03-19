@@ -56,3 +56,4 @@ Z_PROTOTYPE(lic);
 Z_PROTOTYPE(end);
 Z_PROTOTYPE(lod);
 Z_PROTOTYPE(nmb);
+Z_PROTOTYPE(chk);

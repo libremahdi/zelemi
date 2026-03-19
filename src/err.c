@@ -42,7 +42,7 @@
 #define _invalid_value          5
 #define _lack_of_master         6
 
-void zelemi_printerr_sys(char *header, char *comment, ...) {
+void zelemi_printerr_sys(const char *header, const  char *comment, ...) {
     va_list args;
     va_start(args, comment);
     printf(RED"%s"RESET": ", header);

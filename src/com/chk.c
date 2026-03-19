@@ -28,40 +28,30 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <stdlib.h> /* NULL */
+#include <stdlib.h> /* abort */
 #include <string.h> /* strcmp */
-#include "header.h"
+#include "errors.h"
 #include "c_struct.h"
+#include "zelemi_err.h"
+#include "config.h"
 
-struct FunctionBuffer commands[] = {
-    {"LDF", zelemi_command_lod}, /* Load File while zelemi in console mode */
-    {"END", zelemi_command_end}, 
-    {"CLR", zelemi_command_clr}, /* Clear [e.g Page, Buffer] */
-    {"ADR", zelemi_command_adr}, /* Address of zelemi-special internal function */
-    {"HLP", zelemi_command_hlp}, /* show Help page */
-    {"LIC", zelemi_command_lic}, /* show License */
-    {"RUN", zelemi_command_run}, 
-    {"NMB", zelemi_command_nmb}, /* Change Number Base */
-    {"CHK", zelemi_command_chk},
-    {NULL, NULL}
-};
-
-int c_run_commands(int argc, const string const *command, const string const *option, struct DATA_STRUCT *data_pack) {
-    register unsigned char in_1 = 0;
-    while(commands[in_1].CommandName) {
-        if(strcmp(pstr_peek(command), commands[in_1].CommandName)==0)
-            return commands[in_1].fnc(argc, (option==NULL)?NULL:pstr_peek(option), data_pack);
-        ++in_1;
+int zelemi_command_chk(int argc, const char *opt, struct DATA_STRUCT *data_pack) {
+    if(!opt)  {zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "CHK"); return -3;} 
+    else if((strcmp(opt, "X64")==0)||(strcmp(opt, "X86_64")==0)||(strcmp(opt, "AMD64")==0)) { 
+        #ifdef X86_64
+            return 0;
+        #else
+        zelemi_printerr_sys("CHK Signal", "Your Architecture is not '%s'", opt);
+        abort();
+        #endif
     }
-    return -2;
-}
-
-int ignore_commands(char *com) {
-    register unsigned char in_1 = 0;
-    
-    while(commands[in_1].CommandName) {
-        if(strcmp(com, commands[in_1].CommandName)==0) return 1;
-        ++in_1;
+    else if((strcmp(opt, "POWERPC")==0)) { 
+        #ifdef POWERPC
+            return 0;
+        #else
+        zelemi_printerr_sys("CHK Signal", "Your Architecture is not '%s'", opt);
+        abort();
+        #endif
     }
-    return 0;
+    else {zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, ARGUMENT_ERROR, opt); return -3;} 
 }

@@ -33,4 +33,4 @@
 #pragma once
 
 int  zelemi_error_parser(usrerr, char **);
-void zelemi_printerr_sys(char *, char *, ...);
+void zelemi_printerr_sys(const char *, const char *, ...);

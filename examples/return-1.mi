@@ -1,6 +1,7 @@
 ; return 1 for X86_64-intel
 ; This program returns exit code 1.
 
+CHK X86_64
 NMB HEX ; Number Base
 
 b8 01 00 00 00      ; mov eax, 1 ; sys_exit for syscall

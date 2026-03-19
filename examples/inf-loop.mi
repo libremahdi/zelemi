@@ -3,6 +3,7 @@
 ; specifically the last byte FE. To jump to the nop with three bytes, we need to go back: 
 ; two bytes for the jmp itself and one byte for executing the instruction that follows it.
 
+CHK X86_64
 NMB HEX ; Number Base
 
 90 ; nop

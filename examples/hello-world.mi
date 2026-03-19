@@ -6,6 +6,7 @@
 ;   eax <- 1        : sets the syscall number to 1 (for write).
 ;   edx <- 14       : sends the length of the string (14) to the syscall for printing.
 
+CHK X86_64
 NMB HEX ; Number Base
 
 48 c7 c7 01 00 00 00    ; mov rdi, 1  ; first agument of syscall, 1 for stdout

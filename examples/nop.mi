@@ -1,5 +1,6 @@
 ; NOP Command for X86_64-intel
 
+CHK X86_64
 NMB HEX ; Number Base
 
 ; The NOP instruction (No Operation) in assembly language performs no action, 

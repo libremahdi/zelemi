@@ -28,7 +28,6 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <stdlib.h> /* abort */
 #include <string.h> /* strcmp */
 #include "errors.h"
 #include "c_struct.h"
@@ -42,7 +41,7 @@ int zelemi_command_chk(int argc, const char *opt, struct DATA_STRUCT *data_pack)
             return 0;
         #else
         zelemi_printerr_sys("CHK Signal", "Your Architecture is not '%s'", opt);
-        abort();
+        return -3;
         #endif
     }
     else if((strcmp(opt, "POWERPC")==0)) { 
@@ -50,7 +49,7 @@ int zelemi_command_chk(int argc, const char *opt, struct DATA_STRUCT *data_pack)
             return 0;
         #else
         zelemi_printerr_sys("CHK Signal", "Your Architecture is not '%s'", opt);
-        abort();
+        return -3;
         #endif
     }
     else {zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, ARGUMENT_ERROR, opt); return -3;} 

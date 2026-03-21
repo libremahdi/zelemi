@@ -48,37 +48,39 @@ int zelemi_command_hlp(int argc, const char *opt, struct DATA_STRUCT *data_pack)
     char flag=1; /* A byte for A Flag */
 
       if((!opt)||(strcmp(opt, "ADR")==0)) flag=zelemi_printret("\
-ADR [fnc]         : It returns the address of a specific internal function based on its parameter.\n\
-                    [REG] : prints the values of all global registers.\n");
+ADR [fnc]           : It returns the address of a specific internal function based on its parameter.\n\
+                      [REG] : prints the values of all global registers.\n");
       if((!opt)||(strcmp(opt, "LIC")==0)) flag=zelemi_printret("\
-LIC -no argument- : prints the text and provisions of the software license.\n");
+LIC -no parameter-  : prints the text and provisions of the software license.\n");
       if((!opt)||(strcmp(opt, "HLP")==0)) flag=zelemi_printret("\
-HLP -no argument- : prints the help text.\n");
+HLP [parameter]     : prints the help text.\n\
+                      [Command]       : Prints The Command Help\n\
+                      -no-parameter-  : Prints All Commands Help\n");
        if((!opt)||(strcmp(opt, "END")==0)) flag=zelemi_printret("\
-END -no argument- : An interactive command used to exit the software.\n\
-                    It does not affect the machine code, and the END \n\
-                    instruction cannot be used within the machine code.\n");
+END -no argument-   : An interactive command used to exit the software.\n\
+                      It does not affect the machine code, and the END \n\
+                      instruction cannot be used within the machine code.\n");
         if((!opt)||(strcmp(opt, "CLR")==0)) flag=zelemi_printret("\
-CLR [parameter]   : It clears a specific buffer or page based on the parameter.\n\
-                    It cannot be used within machine code.\n\
-                    [BFR]     : It clears the machine code buffer as if no machine\n\
-                              code instructions have ever been entered. \n\
-                              However, the buffer capacity does not change.\n\
-                    [BFRCAPA] : Like the parameter BFR, it also clears the \n\
-                                buffer capacity and frees the buffer in memory.\n\
-                    -no-parameter- : Clear the Terminal Screen with Call system-function\n");
+CLR [parameter]     : It clears a specific buffer or page based on the parameter.\n\
+                      It cannot be used within machine code.\n\
+                      [BFR]           : It clears the machine code buffer as if no machine\n\
+                                        code instructions have ever been entered. \n\
+                                        However, the buffer capacity does not change.\n\
+                      [BFRCAPA]       : Like the parameter BFR, it also clears the \n\
+                                        buffer capacity and frees the buffer in memory.\n\
+                      -no-parameter-  : Clear the Terminal Screen with Call system-function\n");
         if((!opt)||(strcmp(opt, "LDF")==0)) flag=zelemi_printret("\
-LDF [File Addr]:    Load Machine opcodes from File, while the Zelemi is in Console mode.\n\
-                    it can be used to save Call Point Machine Code (like func) in a file!\n");
+LDF [File Addr]     : Load Machine opcodes from File, while the Zelemi is in Console mode.\n\
+                      it can be used to save Call Point Machine Code (like func) in a file!\n");
         if((!opt)||(strcmp(opt, "NMB")==0)) flag=zelemi_printret("\
-NMB [Number Base]:  Changes the base of the input number.. default is %d\n\
-                    [2][BIN] [10][DEC] [8][OCT] [16][HEX]\n", DEFAULT_NMB_ARG_I);
+NMB [Number Base]   : Changes the base of the input number.. default is %d\n\
+                      [2][BIN] [10][DEC] [8][OCT] [16][HEX]\n", DEFAULT_NMB_ARG_I);
         if((!opt)||(strcmp(opt, "RUN")==0)) flag=zelemi_printret("\
-RUN -no argument- : It loads the machine code buffer into the executable space and then executes it.\n");
+RUN -no parameter-  : It loads the machine code buffer into the executable space and then executes it.\n");
         if((!opt)||(strcmp(opt, "CHK")==0)) flag=zelemi_printret("\
-CHK [architecture] : Compares the architecture of your computer with the argument.\n\
-                     if there is a discrepancy, it build an error and stopes in script mode.\n\
-                     [X86_64][X64][AMD64] [POWERPC]\n");
+CHK [architecture]  : Compares the architecture of your computer with the argument.\n\
+                      if there is a discrepancy, it build an error and stopes in script mode.\n\
+                      [X86_64][X64][AMD64] [POWERPC]\n");
         if(flag) {
             zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, ARGUMENT_ERROR, opt);
             return -3;

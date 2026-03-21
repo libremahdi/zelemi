@@ -49,7 +49,7 @@ struct FunctionBuffer commands[] = {
 int c_run_commands(int argc, const string const *command, const string const *option, struct DATA_STRUCT *data_pack) {
     register unsigned char in_1 = 0;
     while(commands[in_1].CommandName) {
-        if(strcmp(pstr_peek(command), commands[in_1].CommandName)==0)
+        if(pstr_arrcmp(command, commands[in_1].CommandName))
             return commands[in_1].fnc(argc, (option==NULL)?NULL:pstr_peek(option), data_pack);
         ++in_1;
     }

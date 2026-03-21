@@ -37,7 +37,7 @@
 #include "config.h"
 
 int zelemi_send(const string *, struct DATA_STRUCT *);
-int ignore_commands(char *);
+int ignore_commands(const string *);
 
 #define BUFFER_SIZE 256
 
@@ -73,7 +73,7 @@ int zelemi_command_lod(int argc, const char *opt, struct DATA_STRUCT *data_pack)
         /**************************/
         {
             string *command = pstr_isplit(p_input, 1);
-            if(ignore_commands((char *)pstr_peek(command))) {
+            if(ignore_commands(command)) {
                 printf(GREEN"; %s\n"RESET, pstr_peek(p_input));
                 continue; 
             }

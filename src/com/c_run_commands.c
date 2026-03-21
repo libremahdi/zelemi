@@ -56,11 +56,11 @@ int c_run_commands(int argc, const string const *command, const string const *op
     return -2;
 }
 
-int ignore_commands(char *com) {
+int ignore_commands(const string *com) {
     register unsigned char in_1 = 0;
     
     while(commands[in_1].CommandName) {
-        if(strcmp(com, commands[in_1].CommandName)==0) return 1;
+        if(pstr_arrcmp(com, commands[in_1].CommandName)) return 1;
         ++in_1;
     }
     return 0;

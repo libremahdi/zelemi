@@ -90,7 +90,8 @@ For executing machine language codes.");
             ++i;
         }
     }
-    pinit_hint(init);
+
+    if(argc==1) pinit_hint(init);
 EXIT:
     pclass_free(main);
     pinit_free(init);

@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 project(Zelemi)
 
+# Set C standard and prevent compilation if not supported
+set(CMAKE_C_STANDARD 23)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+
 include_directories(src/libs src/com config)
 
 file(GLOB SOURCES 

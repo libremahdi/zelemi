@@ -39,7 +39,7 @@
 
 static int zelemi_isn_hex(const string *, unsigned);
 
-int zelemi_send(const string const *p_input, struct DATA_STRUCT *data_pack) {
+int zelemi_send(const string *p_input, struct DATA_STRUCT *data_pack) {
     unsigned int HEX_INT, i=1;
     
     string *token = pstr_isplit(p_input, i);
@@ -72,7 +72,7 @@ RET_ERR:
     return 1;
 }
 
-static int zelemi_isn_hex(const string const *input, unsigned i_number_base) {
+static int zelemi_isn_hex(const string *input, unsigned i_number_base) {
     char *endptr;
     strtol(pstr_peek(input), &endptr, i_number_base);
     return *endptr != '\0'; /* 0 for truly hex */

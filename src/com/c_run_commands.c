@@ -46,7 +46,7 @@ struct FunctionBuffer commands[] = {
     {NULL, NULL}
 };
 
-int c_run_commands(int argc, const string const *command, const string const *option, struct DATA_STRUCT *data_pack) {
+int c_run_commands(int argc, const string *command, const string *option, struct DATA_STRUCT *data_pack) {
     register unsigned char in_1 = 0;
     while(commands[in_1].CommandName) {
         if(pstr_arrcmp(command, commands[in_1].CommandName))

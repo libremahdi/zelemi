@@ -52,6 +52,7 @@ For executing machine language codes.");
 
     palw main_allowed_options[] = {
         { 1, "license", "displays the software license."},
+        { 1, "l" },
         { 2, "version", "It displays the software version"},
         { 2, "v" },
         EOL

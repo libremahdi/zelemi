@@ -43,7 +43,7 @@
 #endif
 
 int zelemi_command_adr(int argc, const char *opt, struct DATA_STRUCT *data_pack) {
-    if(!opt) {zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "ADR"); return -3;}
+    if(!opt) {zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "ADR", "ADR"); return -3;}
     
     if(strcmp(opt, "REG")==0)
     { printf("Function Address: %p\n", (void*)REG_CALL); return 0; /* continue to loop */ }

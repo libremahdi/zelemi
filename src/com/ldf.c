@@ -42,7 +42,7 @@ int ignore_commands(const string *);
 #define BUFFER_SIZE 256
 
 int zelemi_command_lod(int argc, const char *opt, struct DATA_STRUCT *data_pack) {
-    if(!opt)  {zelemi_printerr_sys(FILE_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "LDF"); return -3;} 
+    if(!opt)  {zelemi_printerr_sys(FILE_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "LDF", "LDF"); return -3;} 
 
     FILE *load_fp=fopen(opt, "r");
     if(!load_fp) {zelemi_printerr_sys(FILE_ERROR_HEADER, FILE_ERROR, opt); return -3;}

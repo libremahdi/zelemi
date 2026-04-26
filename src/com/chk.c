@@ -35,7 +35,7 @@
 #include "config.h"
 
 int zelemi_command_chk(int argc, const char *opt, struct DATA_STRUCT *data_pack) {
-    if(!opt)  {zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "CHK"); return -3;} 
+    if(!opt)  {zelemi_printerr_sys(ARGUMENT_ERROR_HEADER, TAKES_ONE_ARG_ERROR, "CHK", "CHK"); return -3;} 
     else if((strcmp(opt, "X64")==0)||(strcmp(opt, "X86_64")==0)||(strcmp(opt, "AMD64")==0)) { 
         #ifdef X86_64
             return 0;

@@ -43,7 +43,7 @@
 #define EMPTY_BUFFER_ERROR      "No opcode available for execution."
 #define RUN_TOO_MANY_ARGC_ERROR "zelemi-run takes only one argument, which is the path to the source code file."
 #define TAKES_ONE_ARG_ERROR     "The '%s' command takes one argument. see 'HLP %s'"
-#define TAKEN_ANY_ARG_ERROR     "The '%s' command does not take any arguments"
+#define TAKEN_ANY_ARG_ERROR     "The '%s' command does not take any arguments. see 'HLP %s'"
 #define COMMAND_LOAD_HINT       "All Commands are ignored when `LOAD` a file"
 
 #define INVALID_OPTION_ERR      "invalid option :"
